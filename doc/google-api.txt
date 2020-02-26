@@ -1,0 +1,2 @@
+conda install -c conda-forge authlib
+conda install google-api-python-client google-auth-httplib2 google-auth-oauthlib

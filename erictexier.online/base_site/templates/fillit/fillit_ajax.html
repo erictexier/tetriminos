@@ -1,0 +1,47 @@
+{% if dotext %}
+    <article class="media content-section">
+        <div class="media-body">
+            {% if label %}
+                <small class="text-muted">{{ label }}</small>
+            {% endif %}
+            {% autoescape false %}
+            {% for line in data %}
+                <p class="text-monospace" style="margin: 0; color:brown"> {{ line }} </p>
+            {% endfor %}
+            <br>
+            {% for line in result %}
+                <p class="text-monospace" align="left" style="margin: 0; color:green"> {{ line }} </p>
+            {% endfor %}
+            {% endautoescape %}
+        </div>
+    </article>
+{% else %}
+    <article class="media content-section">
+        <div class="media-body">
+            {% if label %}
+                <small class="text-muted">{{ label }}</small>
+            {% endif %}
+            </br>
+                {% for line in data %}
+                    {% for c in line %}
+                        <svg width="15" height="15">
+                                <rect width="15" height="15" style="fill: {{ c.color }} ;stroke-width:5;stroke:{{ c.color }}" />
+                        </svg>
+                    {% endfor %}
+                    </br>
+                {% endfor %}
+            </br>
+                {% for line in result %}
+                    {% for c in line %}
+                        <svg width="15" height="15">
+                            <rect width="15" height="15" style="fill: {{ c.color }} ;stroke-width:5;stroke:{{ c.color }}" />
+                        </svg>
+                    {% endfor %}
+                    </br>
+                {% endfor %}
+        </div>
+    </article>
+{% endif %}
+<div>
+    <small>{{ message }}</small>
+</div>

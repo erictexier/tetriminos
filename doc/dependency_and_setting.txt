@@ -1,0 +1,49 @@
+conda config --add channels conda-forge
+conda config --set channel_priority strict
+
+conda install flask
+
+# start flask for flask (optional)
+export FLASK_APP=flask_blog.py
+flask run
+# to set the server to automatically update
+export FLASK_DEBUG=1
+
+
+
+
+#dependency
+conda install flask-wtf
+conda install -c conda-forge flask-sqlalchemy
+conda install psycopg2
+conda install flask-migrate
+conda install -c conda-forge flask-bcrypt
+conda install flask-login
+conda install flask-mail
+conda install pillow
+
+conda install -c conda-forge authlib
+conda install google-api-python-client google-auth-httplib2 google-auth-oauthlib
+
+conda install numpy
+
+# https://www.youtube.com/watch?v=goToXTC96Co&list=PL-osiE80TeTs4UjLw5MM6OjgkjFeUxCYH&index=13
+Python Flask Tutorial: Deploying Your Application (Option #1) - Deploy to a Linux Server
+ubuntu - nginx - gunicorn - web Application - supervisor 
+
+server location:   VPS:  ipaddress, username,   label and rootpassword
+optional backup and no need for private address
+Access to remote, find in network ssh Access( something like: ssh -t root@ipaddress)
+rootpassword
+$ apt update && apt upgrade
+hostnamectl set-hostname flask-server  (label)
+nano /etc/hosts and add   20.234.233.433 ipaddress
+$ adduser eric
+create password.
+$ adduser eric sudo
+
+relog as eric
+(local)$ ssh eric@20.234.233.433
+
+# ssh setup
+

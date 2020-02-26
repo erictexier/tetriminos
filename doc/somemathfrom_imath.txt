@@ -1,0 +1,85 @@
+template <class T> template <class S>
+void
+Matrix44<T>::multVecMatrix(const Vec3<S> &src, Vec3<S> &dst) const
+{
+    S a, b, c, w;
+    a = src[0] * x[0][0] + src[1] * x[1][0] + src[2] * x[2][0] + x[3][0];
+    b = src[0] * x[0][1] + src[1] * x[1][1] + src[2] * x[2][1] + x[3][1];
+    c = src[0] * x[0][2] + src[1] * x[1][2] + src[2] * x[2][2] + x[3][2];
+    w = src[0] * x[0][3] + src[1] * x[1][3] + src[2] * x[2][3] + x[3][3];
+    dst.x = a / w;
+    dst.y = b / w;
+    dst.z = c / w;
+}
+
+template <class T> template <class S>
+void
+Matrix44<T>::multDirMatrix(const Vec3<S> &src, Vec3<S> &dst) const
+{
+    S a, b, c;
+    a = src[0] * x[0][0] + src[1] * x[1][0] + src[2] * x[2][0];
+    b = src[0] * x[0][1] + src[1] * x[1][1] + src[2] * x[2][1];
+    c = src[0] * x[0][2] + src[1] * x[1][2] + src[2] * x[2][2];
+    dst.x = a;
+    dst.y = b;
+    dst.z = c;
+}
+template <class T>
+template <class S>
+const Matrix44<T> &
+Matrix44<T>::rotate (const Vec3<S> &r)
+{
+    S cos_rz, sin_rz, cos_ry, sin_ry, cos_rx, sin_rx;
+    S m00, m01, m02;
+    S m10, m11, m12;
+    S m20, m21, m22;
+    cos_rz = Math<S>::cos (r[2]);
+    cos_ry = Math<S>::cos (r[1]);
+    cos_rx = Math<S>::cos (r[0]);
+    
+    sin_rz = Math<S>::sin (r[2]);
+    sin_ry = Math<S>::sin (r[1]);
+    sin_rx = Math<S>::sin (r[0]);
+    m00 =  cos_rz *  cos_ry;
+    m01 =  sin_rz *  cos_ry;
+    m02 = -sin_ry;
+    m10 = -sin_rz *  cos_rx + cos_rz * sin_ry * sin_rx;
+    m11 =  cos_rz *  cos_rx + sin_rz * sin_ry * sin_rx;
+    m12 =  cos_ry *  sin_rx;
+    m20 = -sin_rz * -sin_rx + cos_rz * sin_ry * cos_rx;
+    m21 =  cos_rz * -sin_rx + sin_rz * sin_ry * cos_rx;
+    m22 =  cos_ry *  cos_rx;
+    Matrix44<T> P (*this);
+    x[0][0] = P[0][0] * m00 + P[1][0] * m01 + P[2][0] * m02;
+    x[0][1] = P[0][1] * m00 + P[1][1] * m01 + P[2][1] * m02;
+    x[0][2] = P[0][2] * m00 + P[1][2] * m01 + P[2][2] * m02;
+    x[0][3] = P[0][3] * m00 + P[1][3] * m01 + P[2][3] * m02;
+    x[1][0] = P[0][0] * m10 + P[1][0] * m11 + P[2][0] * m12;
+    x[1][1] = P[0][1] * m10 + P[1][1] * m11 + P[2][1] * m12;
+    x[1][2] = P[0][2] * m10 + P[1][2] * m11 + P[2][2] * m12;
+    x[1][3] = P[0][3] * m10 + P[1][3] * m11 + P[2][3] * m12;
+    x[2][0] = P[0][0] * m20 + P[1][0] * m21 + P[2][0] * m22;
+    x[2][1] = P[0][1] * m20 + P[1][1] * m21 + P[2][1] * m22;
+    x[2][2] = P[0][2] * m20 + P[1][2] * m21 + P[2][2] * m22;
+    x[2][3] = P[0][3] * m20 + P[1][3] * m21 + P[2][3] * m22;
+    return *this;
+}
+template <class T>
+template <class S>
+const Matrix33<T> &
+Matrix33<T>::setRotation (S r)
+{
+    S cos_r, sin_r;
+    cos_r = Math<T>::cos (r);
+    sin_r = Math<T>::sin (r);
+    x[0][0] =  cos_r;
+    x[0][1] =  sin_r;
+    x[0][2] =  0;
+    x[1][0] =  -sin_r;
+    x[1][1] =  cos_r;
+    x[1][2] =  0;
+    x[2][0] =  0;
+    x[2][1] =  0;
+    x[2][2] =  1;
+    return *this;
+}

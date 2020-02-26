@@ -1,0 +1,66 @@
+<!DOCTYPE html>
+<html>
+    <head>
+        <!-- Required meta tags -->
+        <meta charset="utf-8">
+        <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
+
+        <!-- Bootstrap CSS -->
+        <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.4.1/css/bootstrap.min.css" integrity="sha384-Vkoo8x4CGsO3+Hhxv8T/Q5PaXtkKtu6ug5TOeNV6gBiFeWPGFN9MuhOf23Q9Ifjh" crossorigin="anonymous">
+        <!-- Custom Css-->
+        <link rel="stylesheet" type="text/css" href="{{ url_for('static',filename='main.css') }}">
+        {% if title %}
+            <title> EclecTic - {{ title }} </title>
+        {% else %}
+            <title> EclecTic </title>
+        {% endif %}
+        <link rel="shortcut icon" type="image/png" href="{{ url_for('static', filename = 'icon/passeit_logo.png') }}">
+
+    </head>
+    <body>
+        {% include "main/navigation.html" %}
+        <main role="main" class="container">
+            <div class="row">
+                <div class="col-md-3">
+                    <div class="content-section">
+                        <h5 align="center">Shortcuts</h5>
+                        <p class='text-muted'>
+                            <ul class="list-group">
+                            <a class="list-group-item list-group-item-light" align="center" href="{{ url_for('fillit.fillit_route') }}">Fillit: a school project at ecole 42</a>
+                            <a class="list-group-item list-group-item-light" align="center" href="https://www.linkedin.com/in/erictexier/" target="_blank">Profile professionel</a>
+                            <a class="list-group-item list-group-item-light" align="center" href="https://www.passeit.com/" target="_blank">Passeit: Site Wordpress to play with visual idea</a>
+                            <a class="list-group-item list-group-item-light" align="center" href="https://letexman.tumblr.com/" target="_blank">Mon blog photo</a>
+                            <a class="list-group-item list-group-item-light" align="center" href="https://flask-doc.readthedocs.io/en/latest/" target="_blank">Helper while coding this site</a>
+                            <a class="list-group-item list-group-item-light" align="center" href="https://getbootstrap.com/docs/4.4/getting-started/introduction/" target="_blank">La magie du html</a>
+                            </ul>
+                        </p>
+                    </div>
+                </div>
+                <div class="col-md-8">
+                    {% with messages = get_flashed_messages(with_categories=true) %}
+                        {% if messages %}
+                            {% for category, message in messages %}
+                                <div class="alert alert-{{ category }}">
+                                    {{ message }}
+                                </div>
+                            {% endfor %}
+                        {% endif %}
+                    {% endwith %}
+                    {% block content %}{% endblock %}
+                </div>
+                
+            </div>
+        </main>
+        <!-- JQuery -->
+        <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.4.1/jquery.min.js" integrity="sha384-vk5WoKIaW/vJyUAd9n/wmopsmNhiy+L2Z+SBxGYnUkunIxVxAv/UtMOhba/xskxh" crossorigin="anonymous"></script>
+        <!-- Booststrap Js --> 
+        <script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/js/bootstrap.min.js" integrity="sha384-Tc5IQib027qvyjSMfHjOMaLkfuWVxZxUPnCJA7l2mCWNIpG9mGCD8wGNIcPD7Txa" crossorigin="anonymous"></script>
+        <!-- Custom Js -->
+        <script src="{{ url_for('static', filename='js/towait.js') }}"></script>
+        <script src="{{ url_for('static', filename='js/tet_anim.js') }}"></script>
+        <!-- Optional JavaScript -->
+        <!-- jQuery first, then Popper.js, then Bootstrap JS -->
+        <script src="https://cdn.jsdelivr.net/npm/popper.js@1.16.0/dist/umd/popper.min.js" integrity="sha384-Q6E9RHvbIyZFJoft+2mJbHaEWldlvI9IOYy5n3zV9zzTtmI3UksdQRVvoxMfooAo" crossorigin="anonymous"></script>
+        <script src="https://stackpath.bootstrapcdn.com/bootstrap/4.4.1/js/bootstrap.min.js" integrity="sha384-wfSDF2E50Y2D1uUdj0O3uMBJnjuUD4Ih7YwaYd1iqfktj0Uod8GCExl3Og8ifwB6" crossorigin="anonymous"></script>
+    </body> 
+</html>

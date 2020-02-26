@@ -1,0 +1,58 @@
+{% extends "main/layout.html" %}
+{% block content %}
+<div class="content-section">
+    <form method="POST", action="", id="form_grid_tetrino">
+        {{ form.hidden_tag() }}
+        <div class="d-inline-block column">
+            <fieldset>
+            <div class="row">
+                <div>
+                    {{ form.submit(class="btn btn-outline-info mr-3 ml-3 mt-3 mb-3", id = "btn_my_form_id") }}
+                </div>
+                <div>
+                    {% if form.nb_element.errors %}
+                        {{ form.nb_element(class="form-control form-control-sm is-invalid") }}
+                        <div class="invalid-feedback">
+                            {% for error in form.nb_element.errors %}
+                                <span> {{ error }} </span>
+                            {% endfor %}
+                        </div>
+                    {% else %}
+                        {{ form.nb_element(class="form-control mr-0 ml-0 mt-3 mb-3 name=input_val") }}
+                    {% endif %}
+                </div>
+                <div>
+                    <small class="text-muted"> {{ form.nb_element.label(class="col-form-label mr-3 ml-3 mt-3 mb-3") }}</small>
+                </div>
+                <div>
+                    {{ form.doletter(class="form-control form-control-sm mr-0 ml-0 mt-3 mb-3")}} 
+                </div>
+                <div>
+                    <small class="text-muted"> {{ form.doletter.label(class="form-control-label form-control-sm mr-0 ml-0 mt-3 mb-3")}} </small>
+                </div>
+            <div>
+            </fieldset>
+        </div>
+
+        {% if blank == False %}
+        <article class="media content-section">
+            <div class="media-body">
+                {% if label %}
+                    <small class="text-muted">{{ label }}</small>
+                {% endif %}
+                {% autoescape false %}
+                {% for line in data %}
+                    <p class="text-monospace" style="margin: 0; color:brown"> {{ line }} </p>
+                {% endfor %}
+                <br>
+                {% for line in result %}
+                    <p class="text-monospace" align="left" style="margin: 0; color:green"> {{ line }} </p>
+                {% endfor %}
+                {% endautoescape %}
+            </div>
+        </article>
+        {% endif %}
+    </form>
+    <div id="end_form_tetrino"></div>
+</div>
+{% endblock content %}

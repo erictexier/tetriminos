@@ -1,0 +1,44 @@
+sudo apt-get install postgresql postgresql-contrib
+
+sudo -u postgres psql -c "SELECT version();"
+
+sudo su - postgres -c "createuser devopsuser"
+
+sudo su - postgres -c "createdb flaskprofiledb"
+
+# in psql
+sudo -u postgres psql
+postgres=# grant all privileges on database flaskprofiledb to devopsuser;
+postgres=# alter user devopsuser with password 'devops';
+\q
+
+# to remote access edit: sudo nano /etc/postgresql/10/main/postgresql.conf and change:
+listen_addresses='localhost' to listen_addresses='*'
+
+# for access from mac will have to edit : 
+/etc/postgresql/10/main/pg_hba.conf
+host all all 0.0.0.0/0 md5
+
+
+# restart
+sudo /etc/init.d/postgresql restart
+
+# check if it's running on port 5432
+netstat -tlupn | grep 5432
+
+# flask
+POSTGRES_USER = 'devopsuser'
+POSTGRES_PW = 'devops'
+POSTGRES_URL = 'localhost'
+POSTGRES_DB = 'flaskprofiledb'
+DB_URL = 'postgresql+psycopg2://{user}:{pw}@{url}/{db}'.format(user=POSTGRES_USER,pw=POSTGRES_PW,url=POSTGRES_URL,db=POSTGRES_DB)
+
+# on mac to install postgres
+brew uninstall --force postgresql  # remove old install
+brew install postgres
+pg_ctl -D /Users/etexier/.brew/var/postgres status
+createuser devopsuser
+createdb flaskprofiledb
+psql flaskprofiledb
+                flaskprofiledb=# grant all privileges on database flaskprofiledb to devopsuser;
+                flaskprofiledb=# alter user devopsuser with password 'devops';

@@ -1,0 +1,67 @@
+$ sudo touch /etc/config_flask.json
+# edit with the content of flask/utils/config_flask.json
+# from the webapp directory where the run.py is do instead of 'python run.py':
+
+export FLASK_APP=run.py
+flask run --host=0.0.0.0
+
+# install nginx
+sudo apt install nginx
+conda  install  gunicorn
+
+#nginx config
+sudo rm /etc/nginx/sites-enabled/default
+sudo nano /etc/nginx/sites-enabled/flask_blog
+
+#in the file
+server {
+	listen 80;
+	server_name 51.178.81.105;
+
+	location /static {
+		alias /home/eric/workspace/passeit/flask/webapp/flask_blog/static;
+	}
+	location / {
+		proxy_pass http://localhost:8000;
+		include /etc/nginx/proxy_params;
+		proxy_redirect off;
+	}
+}
+
+#enable port 8000
+sudo ufw allow http/tcp
+sudo ufw delete allow 5000
+sudo ufw enable
+
+# restart nginx
+sudo systemctl restart nginx
+
+# at this point static should be working
+
+
+# gunicorn from webapp
+gunicorn -w 3 run:app    # (w = 2 x number of core + 1) (check with nproc --all)
+
+# supervisor
+sudo apt install supervisor
+
+sudo nano /etc/supervisor/conf.d/flask_blog.conf
+
+# edit:
+[program:flask_blog]
+directory:/home/eric/workspace/passeit/flask/webapp
+command:/home/eric/miniconda3/bin/gunicorn -w 3 run:app
+user=eric
+autostart=true
+autorestart=true
+stopasgroup=true
+killasgroup=true
+stderr_logfile:/var/log/flask_blog/flask_err.log
+stdout_logfile:/var/log/flask_blog/flask_out.log # need to be created
+
+# restart supervisor
+sudo supervisorctl reload
+
+# update some ngnix config 
+sudo nano /etc/ngnix/nginx.conf ---> client_max_body_size 5M; (in http above server_tokens off)
+sudo systemctl restart nginx

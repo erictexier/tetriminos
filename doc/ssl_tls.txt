@@ -1,0 +1,31 @@
+https://gist.github.com/cecilemuller/a26737699a7e70a7093d4dc115915de8
+
+sudo apt-get update
+sudo apt-get install software-properties-common
+sudo add-apt-repository universe
+sudo add-apt-repository ppa:certbot/certbot
+sudo apt-get update
+
+
+sudo apt-get install certbot python-certbot-nginx
+
+# sudo to edit save name instead of ip address
+sudo nano /etc/nginx/sites-enabled/flask_blog 
+
+# start here when domainename is apply
+sudo certbot --nginx
+
+sudo nginx -t # to check that is correct
+
+# firewall
+sudo ufw allow https
+# restart nginx
+sudo systemctl restart nginx 
+
+sudo certbot renew --dry-run
+
+# set the renew on cron
+sudo crontab -e
+
+# cron command to add at the end
+15 15 5 * * sudo certbot renew --quiet
