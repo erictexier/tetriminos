@@ -9,19 +9,19 @@
         <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.4.1/css/bootstrap.min.css" integrity="sha384-Vkoo8x4CGsO3+Hhxv8T/Q5PaXtkKtu6ug5TOeNV6gBiFeWPGFN9MuhOf23Q9Ifjh" crossorigin="anonymous">
         <!-- Custom Css-->
         <link rel="stylesheet" type="text/css" href="{{ url_for('static',filename='main.css') }}">
+        <link rel="stylesheet" type="text/css" href="{{ url_for('static',filename='bootstrap-social.css') }}">
         {% if title %}
             <title> EclecTic - {{ title }} </title>
         {% else %}
             <title> EclecTic </title>
         {% endif %}
         <link rel="shortcut icon" type="image/png" href="{{ url_for('static', filename = 'icon/passeit_logo.png') }}">
-
     </head>
     <body>
         {% include "main/navigation.html" %}
         <main role="main" class="container">
-            <div class="row">
-                <div class="col-md-3">
+            <div class="row ml-0">
+                <div class="col-md-4">
                     <div class="content-section">
                         <h5 align="center">Shortcuts</h5>
                         <p class='text-muted'>
@@ -48,7 +48,9 @@
                     {% endwith %}
                     {% block content %}{% endblock %}
                 </div>
-                
+            </div>
+            <div class="content-section">
+                {% include "main/footer.html" %}
             </div>
         </main>
         <!-- JQuery -->

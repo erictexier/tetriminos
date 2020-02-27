@@ -1,3 +1,4 @@
+var prevScrollpos = window.pageYOffset;
 $(document).ready(function() {
 
     $('#form_grid_tetrino').submit(function(event) {
@@ -39,4 +40,15 @@ $(document).ready(function() {
         });
         event.preventDefault();
     });
+
+    window.onscroll = function() {
+    var currentScrollPos = window.pageYOffset;
+    console.log(currentScrollPos);
+    if (prevScrollpos > currentScrollPos) {
+        document.getElementById("navbar").style.top = "0";
+    } else {
+        document.getElementById("navbar").style.top = "-90px";
+    }
+    prevScrollpos = currentScrollPos;
+    }
 });
