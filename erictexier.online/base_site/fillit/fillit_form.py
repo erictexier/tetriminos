@@ -8,7 +8,7 @@ class FillitForm(flask_wtf.FlaskForm):
 													min=1,
 													max=13, 
 													message="nb of tetriminos should be between 1 and 26")])
-    doletter = wtforms.SelectField('Draw',  choices=[('Do 3D','3D'),
+    doletter = wtforms.SelectField('',  choices=[('Do 3D','3D'),
                                                     ('Do Color', 'Rect'),
                                                     ('Do Text', 'Text'),
                                                     ('Do Anim','Anim'),

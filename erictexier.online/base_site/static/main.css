@@ -12,14 +12,14 @@ color: #444444;
 background-color: #5f788a;
 }
 .bg-steel2 {
-  background-color: #8fb8ca;
+  background-color: #063544;
   }
 .bg-steel-light {
   background-color: #afceda;
   }
 
 .site-header .navbar-nav .nav-link {
-color: #cbd5db;
+color: #dbf5fb;
 }
 
 .site-header .navbar-nav .nav-link:hover {
@@ -27,6 +27,18 @@ color: #ffffff;
 }
 
 .site-header .navbar-nav .nav-link.active {
+font-weight: 500;
+}
+
+.footer  .link {
+color: #dbe5eb;
+}
+
+.footer  .link:hover {
+color: #ffffff;
+}
+
+.footer  .link.active {
 font-weight: 500;
 }
 
