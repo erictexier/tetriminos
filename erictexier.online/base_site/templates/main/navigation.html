@@ -1,15 +1,15 @@
 <header class="site-header">
     <nav class="navbar navbar-expand-md navbar-dark bg-steel-light fixed-top"  id="navbar">
         <div class="container">
-            <a class="navbar-brand mr-4" href="/">
+            <div class="navbar-brand mr-4" href="/">
                 <!-- Logo Image -->
-                <img src="{{ url_for('static', filename = 'icon/passeit_logo_short.png') }}" width="100" alt="" class="d-inline-block align-middle mr-2">
+                <img src="{{ url_for('static', filename = 'icon/passeit_logo_short.png') }}" width="100" alt="none" class="d-inline-block align-middle mr-2">
                 <!-- Logo Text -->
                 <!--			<span class="text font-weight-bold">EclecTic</span> -->
                 <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarToggle" aria-controls="navbarToggle" aria-expanded="false" aria-label="Toggle navigation">
                     <span class="navbar-toggler-icon"></span>
                 </button>
-            </a>
+              </div>
             <div class="collapse navbar-collapse" id="navbarToggle">
                 <div class="navbar-nav mr-auto">
                     <a class="nav-item nav-link" href="{{ url_for('main.home') }}">Home</a>
@@ -28,5 +28,5 @@
                 </div>
             </div>
         </div>
-      </nav>
-  </header>
+    </nav>
+</header>

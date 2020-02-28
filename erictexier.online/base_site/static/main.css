@@ -10,8 +10,8 @@ color: #444444;
 
 
 .bg-steel-light {
-  background-color: #BBCFDA;
-  }
+  background-color: #bbcfda;
+}
 
 .bg-steel-dark {
   background-color: #4D5559;
@@ -27,6 +27,8 @@ color: #ffffff;
 .site-header .navbar-nav .nav-link.active {
 font-weight: 500;
 }
+
+
 
 .footer
 {
@@ -125,4 +127,52 @@ font-size: 2.5rem;
   text-align: center;
   padding: 15px;
   text-decoration: none;
+}
+
+#container_wrapper {
+  display: None;
+  width: 100%;
+  align-items: stretch;
+}
+
+#sidebar {
+    /* don't forget to add all the previously mentioned styles here too */
+    background: #bbcfda;
+    color: #fff;
+    transition: all 0.9s;
+}
+
+#sidebar .sidebar-header {
+    padding: 20px;
+    background: #bbcfda;
+}
+
+#sidebar ul.components {
+    padding: 20px 0;
+    border-bottom: 1px solid #47748b;
+}
+
+#sidebar ul p {
+    color: #fff;
+    padding: 10px;
+}
+
+#sidebar ul li a {
+    padding: 10px;
+    font-size: 1.1em;
+    color:#dbf5fb;
+    display: block;
+}
+#sidebar ul li a:hover {
+    color: #ffffff;
+}
+
+#sidebar ul li.active > a, a[aria-expanded="true"] {
+    color: #ffffff;
+    background: #8F9EA6;
+}
+ul ul a {
+    font-size: 0.9em !important;
+    padding-left: 30px !important;
+    background: #8F9EA6;
 }
