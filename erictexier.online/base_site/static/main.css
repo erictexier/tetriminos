@@ -8,16 +8,14 @@ h1, h2, h3, h4, h5, h6 {
 color: #444444;
 }
 
-.bg-steel {
-background-color: #5f788a;
-}
-.bg-steel2 {
-  background-color: #063544;
-  }
+
 .bg-steel-light {
-  background-color: #afceda;
+  background-color: #BBCFDA;
   }
 
+.bg-steel-dark {
+  background-color: #4D5559;
+}
 .site-header .navbar-nav .nav-link {
 color: #dbf5fb;
 }
@@ -30,6 +28,14 @@ color: #ffffff;
 font-weight: 500;
 }
 
+.footer
+{
+    position: absolute;
+    left: 0;
+    right: 0;
+    width: 100%;
+}
+
 .footer  .link {
 color: #dbe5eb;
 }
@@ -40,6 +46,14 @@ color: #ffffff;
 
 .footer  .link.active {
 font-weight: 500;
+}
+
+.footer .btn {
+  color: #ff8844;
+}
+
+.footer .btn-eclectic {
+  color: #BBCFDA;
 }
 
 .content-section {
