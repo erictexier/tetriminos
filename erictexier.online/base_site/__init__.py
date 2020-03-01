@@ -11,6 +11,7 @@ import logging
 from pprint import pformat
 logging.log(logging.WARNING,pformat(os.environ['PYTHONPATH']))
 """
+from pprint import pprint
 
 db = SQLAlchemy()
 bcrypt = Bcrypt()
@@ -22,7 +23,6 @@ mail = Mail()
 def create_app(config_class = Config):
     app = Flask(__name__)
     app.config.from_object(Config)
-
     db.init_app(app)
     bcrypt.init_app(app)
     login_manager.init_app(app)
@@ -34,10 +34,13 @@ def create_app(config_class = Config):
     from base_site.fillit.routes import fillit
     from base_site.errors.handlers import errors
 
+    from base_site.google_api.routes import google_api
+
     app.register_blueprint(users)
     app.register_blueprint(posts)
     app.register_blueprint(main)
     app.register_blueprint(fillit)
+    app.register_blueprint(google_api)
     app.register_blueprint(errors)
 
     return app

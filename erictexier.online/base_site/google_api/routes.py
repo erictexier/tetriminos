@@ -1,17 +1,16 @@
-from flask import Blueprint
-from flask import render_template, jsonify, flash, request, redirect, url_for, current_app
-from base_site.google_api import google_auth
+import os
+import functools
+
 from authlib.integrations.requests_client import OAuth2Session
+import requests
+
+import flask
+from flask import Blueprint
+from flask import current_app as app
+from base_site.google_api import google_auth
+
 
 google_api = Blueprint('google_api', __name__)
-
-@google_api.route('/with_google')
-def index():
-    if google_auth.is_logged_in():
-        user_info = google_auth.get_user_info()
-        return '<div>You are currently logged in as ' + user_info['given_name'] + '<div><pre>' + json.dumps(user_info, indent=4) + "</pre>"
-
-    return 'You are not currently logged in.'
 
 def no_cache(view):
     @functools.wraps(view)
@@ -24,50 +23,67 @@ def no_cache(view):
 
     return functools.update_wrapper(no_cache_impl, view)
 
+
 @google_api.route('/with_google/login')
 @no_cache
 def login():
-    CLIEND_ID = app.config.get("CLIENT_ID", None)
-    CLIEND_SECRET = app.config.get("CLIENT_SECRET", None)
-    if CLIEND_ID and CLIEND_SECRET:
-        session = OAuth2Session(CLIENT_ID,
-                                CLIENT_SECRET,
-                                scope = app.config.get("AUTHORIZATION_SCOPE","openid"),
-                                redirect_uri = app.config.get("AUTH_REDIRECT_URI")
-    
-        uri, state = session.authorization_url(AUTHORIZATION_URL)
 
-        flask.session[AUTH_STATE_KEY] = state
-        flask.session.permanent = True
+    client_id = app.config.get("CLIENT_ID", None)
+    client_secret = app.config.get("CLIENT_SECRET", None)
+    discovery_url = app.config.get("DISCOVERY_URL")
+    scope = app.config.get("AUTHORIZATION_SCOPE","openid")
+    if client_id and client_secret:
 
-        return flask.redirect(uri, code=302)
-    return 'You are not currently able to log in.'
+        client = google_auth.get_client(client_id)
+        provider_cfg = google_auth.get_google_provider_cfg(discovery_url)
+        authorization_endpoint = provider_cfg["authorization_endpoint"]
 
-@google_api.route('/with_google/auth')
-@no_cache
-def google_auth_redirect():
-    req_state = flask.request.args.get('state', default=None, type=None)
+        # Use library to construct the request for Google login and provide
+        # scopes that let you retrieve user's profile from Google
+        request_uri = client.prepare_request_uri(
+                                    authorization_endpoint,
+                                    redirect_uri=flask.request.base_url + "/callback",
+                                    scope=scope,)
+        return flask.redirect(request_uri)
+    return flask.redirect(flask.url_for('users.register'))
 
-    if req_state != flask.session[AUTH_STATE_KEY]:
-        response = flask.make_response('Invalid state parameter', 401)
-        return response
 
-    session = OAuth2Session(CLIENT_ID, CLIENT_SECRET,
-                            scope=AUTHORIZATION_SCOPE,
-                            state=flask.session[AUTH_STATE_KEY],
-                            redirect_uri=AUTH_REDIRECT_URI)
-
-    oauth2_tokens = session.fetch_access_token(
-                        ACCESS_TOKEN_URI,
-                        authorization_response=flask.request.url)
-
-    flask.session[AUTH_TOKEN_KEY] = oauth2_tokens
-    return flask.redirect(BASE_URI, code=302)
-
-@google_api.route('/with_google/logout')
-@no_cache
-def logout():
-    flask.session.pop(AUTH_TOKEN_KEY, None)
-    flask.session.pop(AUTH_STATE_KEY, None)
-
-    return flask.redirect(BASE_URI, code=302)
+@google_api.route('/with_google/login/callback')
+def loggin_call_back():
+    code = flask.request.args.get("code")
+    if code == None:
+        return flask.redirect(flask.url_for('users.register'))
+    provider_cfg = google_auth.get_google_provider_cfg(app.config.get("DISCOVERY_URL"))
+    token_endpoint = provider_cfg["token_endpoint"]
+    client_id = app.config.get("CLIENT_ID", None)
+    client_secret = app.config.get("CLIENT_SECRET", None)
+    client = google_auth.get_client(client_id)
+    # Prepare and send a request to get tokens! Yay tokens!
+    token_url, headers, body = client.prepare_token_request(token_endpoint,
+                                                            authorization_response=flask.request.url,
+                                                            redirect_url=flask.request.base_url,
+                                                            code=code)
+    token_response = requests.post(
+                                token_url,
+                                headers=headers,
+                                data=body,
+                                auth=(client_id, client_secret),)
+    # Parse the tokens!
+    client.parse_request_body_response(json.dumps(token_response.json()))
+    # Now that you have tokens (yay) let's find and hit the URL
+    # from Google that gives you the user's profile information,
+    # including their Google profile image and email
+    userinfo_endpoint = provider_cfg["userinfo_endpoint"]
+    uri, headers, body = client.add_token(userinfo_endpoint)
+    userinfo_response = requests.get(uri, headers=headers, data=body)
+    # You want to make sure their email is verified.
+    # The user authenticated with Google, authorized your
+    # app, and now you've verified their email through Google!
+    if userinfo_response.json().get("email_verified"):
+        unique_id = userinfo_response.json()["sub"]
+        users_email = userinfo_response.json()["email"]
+        picture = userinfo_response.json()["picture"]
+        users_name = userinfo_response.json()["given_name"]
+        print(unique_id,users_email,picture,users_name,)
+    else:
+        return "User email not available or not verified by Google.", 400

@@ -63,9 +63,9 @@ def fillit_ajax():
 
     if form.doletter.data in ["Do Anim" ,"Do 3D"]:
         do_3d = form.doletter.data == "Do 3D"
-        xspace = 30
+        xspace = 25
         yspace = 30
-        rmargin = 20
+        rmargin = 15
         tmargin = 20
         spacing = 200
         scalegame = 0.15
@@ -74,7 +74,7 @@ def fillit_ajax():
             yspace = 21
             scalegame = 0.10
 
-        sizex = ((nb_col + 1) * 5 * xspace) + (2 * rmargin)
+        sizex = ((nb_col + 1) * 3.5 * xspace) + (2 * rmargin)
         sizey = (tmargin * 2) + len(t.result) + len(t.data) + (spacing * 2) + tmargin
         htmlobjlist = ['<canvas id="myCanvas" width="%d" height="%d"></canvas>' % (sizex, sizey)]
         htmlobjlist.append('<button class="btn btn-outline-info" id="refresh">Replay Anim</button>')

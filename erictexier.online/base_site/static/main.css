@@ -1,5 +1,5 @@
 body {
-    background: #fafafa;
+    background: #f5f5f5;
     color: #333333;
     margin-top: 5rem;
   }
@@ -7,7 +7,6 @@ body {
 h1, h2, h3, h4, h5, h6 {
 color: #444444;
 }
-
 
 .bg-steel-light {
   background-color: #bbcfda;
@@ -27,8 +26,6 @@ color: #ffffff;
 .site-header .navbar-nav .nav-link.active {
 font-weight: 500;
 }
-
-
 
 .footer
 {
@@ -125,7 +122,7 @@ font-size: 2.5rem;
   float: left;
   display: block;
   text-align: center;
-  padding: 15px;
+  padding: 5px;
   text-decoration: none;
 }
 
@@ -136,7 +133,6 @@ font-size: 2.5rem;
 }
 
 #sidebar {
-    /* don't forget to add all the previously mentioned styles here too */
     background: #bbcfda;
     color: #fff;
     transition: all 0.9s;
@@ -149,7 +145,7 @@ font-size: 2.5rem;
 
 #sidebar ul.components {
     padding: 20px 0;
-    border-bottom: 1px solid #47748b;
+    border-bottom: 0px solid #47748b;
 }
 
 #sidebar ul p {
