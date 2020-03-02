@@ -1,16 +1,17 @@
-from flask import Blueprint
-from flask import render_template, request
+import flask
 from base_site.models import Post
 
-main = Blueprint('main',__name__)
+main = flask.Blueprint('main',__name__)
 
 @main.route("/")
 @main.route("/home")
 def home():
-    page = request.args.get('page',1, type=int)
+    page = flask.request.args.get('page',1, type=int)
     posts = Post.query.order_by(Post.date_posted.desc()).paginate(page = page, per_page=5)
-    return render_template("posts/home.html", title = 'Posts', posts = posts)
+    return flask.render_template("posts/home.html", title = 'Posts', posts = posts)
 
 @main.route("/about")
 def about():
-    return render_template("main/about.html", title = 'About')
+    alist = ["To be about what you decided on your personal drive:"]
+    alist.append("Nothing for now :)")
+    return flask.render_template("main/about.html", title = 'About Page In the work', contents= alist)

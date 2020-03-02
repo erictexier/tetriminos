@@ -145,7 +145,7 @@ font-size: 2.5rem;
 
 #sidebar ul.components {
     padding: 20px 0;
-    border-bottom: 0px solid #47748b;
+    
 }
 
 #sidebar ul p {
@@ -163,10 +163,6 @@ font-size: 2.5rem;
     color: #ffffff;
 }
 
-#sidebar ul li.active > a, a[aria-expanded="true"] {
-    color: #ffffff;
-    background: #8F9EA6;
-}
 ul ul a {
     font-size: 0.9em !important;
     padding-left: 30px !important;

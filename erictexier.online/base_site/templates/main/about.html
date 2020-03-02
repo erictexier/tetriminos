@@ -1,4 +1,9 @@
 {% extends "main/layout.html" %}
 {% block content %}
-    <h1>About page</h1>
+    <h3 style="color:green"> {{ title }}</h3>
+    {% for content in contents %}
+        <article class="media content-section">
+            <p class="article-content">{{ content }}</p>
+        </article>
+    {% endfor %}
 {% endblock content %}
