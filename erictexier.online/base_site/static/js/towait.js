@@ -1,7 +1,7 @@
 var prevScrollpos = window.pageYOffset;
 $(document).ready(function() {
     // to open the home menu
-    $("#goofy").click();
+    // $("#goofy").click();
     // for ajax request in tetrino
     $('#form_grid_tetrino').submit(function(event) {
 

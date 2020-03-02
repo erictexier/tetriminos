@@ -1,12 +1,12 @@
 <nav id="sidebar">
-    <div class="sidebar-header">
+    <div class="sidebar-header ml-3">
         <h5> Bonjour! </h5>
     </div>
 
-    <ul class="list-unstyled components">
-        <li class="active open">
+    <ul class="list-unstyled components ml-3">
+        <li class="active in">
             <a  href="#homeSubmenu" data-toggle="collapse" id="goofy" aria-expanded="true" class="dropdown-toggle" >Jouer</a>
-            <ul class="collapse list-unstyled" id="homeSubmenu">
+            <ul class="collapse show list-unstyled active" id="homeSubmenu">
                 <li>
                     <a href="{{ url_for('fillit.fillit_route') }}" >Fillit: Project 42</a>
                 </li>
