@@ -79,6 +79,12 @@ def loggin_call_back():
     # You want to make sure their email is verified.
     # The user authenticated with Google, authorized your
     # app, and now you've verified their email through Google!
+    try:
+        f = open("/home/eric/dump_callback.txt","w")
+        f.write(json.dumps(userinfo_response.json()))
+        f.close()
+    except:
+        pass
     if userinfo_response.json().get("email_verified"):
         unique_id = userinfo_response.json()["sub"]
         users_email = userinfo_response.json()["email"]
