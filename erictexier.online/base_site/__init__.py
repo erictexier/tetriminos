@@ -5,12 +5,24 @@ from flask_login import LoginManager
 from flask_mail import Mail
 from base_site.config import Config
 
-"""
-import os
-import logging
-from pprint import pformat
-logging.log(logging.WARNING,pformat(os.environ['PYTHONPATH']))
-"""
+
+from logging.config import dictConfig
+
+dictConfig({
+    'version': 1,
+    'formatters': {'default': {
+        'format': '[%(asctime)s] %(levelname)s in %(module)s: %(message)s',
+    }},
+    'handlers': {'wsgi': {
+        'class': 'logging.StreamHandler',
+        'stream': 'ext://flask.logging.wsgi_errors_stream',
+        'formatter': 'default'
+    }},
+    'root': {
+        'level': 'INFO',
+        'handlers': ['wsgi']
+    }
+})
 from pprint import pprint
 
 db = SQLAlchemy()
@@ -42,5 +54,5 @@ def create_app(config_class = Config):
     app.register_blueprint(fillit)
     app.register_blueprint(google_api)
     app.register_blueprint(errors)
-
+    app.logger.info("%s created" % __name__)
     return app
