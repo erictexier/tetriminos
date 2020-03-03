@@ -131,7 +131,7 @@ def unsubscribe():
 def dump():
     auth_state_key = app.config.get('AUTH_STATE_KEY')
     if 'auth_state_key' in flask.session:
-        print("AUTH", flask.session[auth_state_key])
+        app.logger.info("AUTH", flask.session[auth_state_key])
     else:
-        print("no Key")
+        app.logger.info("no Key")
     return flask.redirect(flask.url_for('main.home'))

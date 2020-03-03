@@ -84,7 +84,7 @@ def loggin_call_back():
         users_email = userinfo_response.json()["email"]
         picture = userinfo_response.json()["picture"]
         users_name = userinfo_response.json()["given_name"]
-        print(unique_id,users_email,picture,users_name,)
+        app.logger.info(unique_id,users_email,picture,users_name,)
         return " IN PROGRESS FOR NOW "
     else:
         return "User email not available or not verified by Google.", 400
