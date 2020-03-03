@@ -42,6 +42,7 @@ def get_user_info():
     return oauth2_client.userinfo().get().execute()
 
 def get_client(client_id):
+    """ should maybe become a singleton  with """
     if client_id in ['', None]:
         return None
     return WebApplicationClient(client_id)

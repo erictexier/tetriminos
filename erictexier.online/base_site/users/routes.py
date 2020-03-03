@@ -111,3 +111,18 @@ def reset_token():
         return flask.redirect(flask.url_for('users.login'))
 
     return flask.render_template('users/reset_token.html', title='Reset Password', form = form)
+
+
+@users.route("/unsubcribe")
+@flask_login.login_required
+def unsubscribe():
+    if flask_login.current_user.is_authenticated:
+        # delete all the post
+        print(flask_login.current_user)
+        posts = Post.query.filter_by(author=flask_login.current_user).all()
+        for p in posts:
+            db.session.delete(p)
+        db.session.delete(flask_login.current_user)
+        db.session.commit()
+        flask_login.logout_user()
+    return flask.redirect(flask.url_for('main.home'))
