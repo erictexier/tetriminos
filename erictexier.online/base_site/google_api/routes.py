@@ -28,13 +28,11 @@ def no_cache(view):
 @google_api.route('/with_google/login')
 @no_cache
 def login():
-
     client_id = app.config.get("CLIENT_ID", None)
     client_secret = app.config.get("CLIENT_SECRET", None)
     discovery_url = app.config.get("DISCOVERY_URL")
     scope = app.config.get("AUTHORIZATION_SCOPE","openid")
     if client_id and client_secret:
-
         client = google_auth.get_client(client_id)
         provider_cfg = google_auth.get_google_provider_cfg(discovery_url)
         authorization_endpoint = provider_cfg["authorization_endpoint"]
@@ -46,6 +44,7 @@ def login():
                                     redirect_uri=flask.request.base_url + "/callback",
                                     scope=scope,)
         return flask.redirect(request_uri)
+
     return flask.redirect(flask.url_for('users.register'))
 
 

@@ -11,12 +11,14 @@ from base_site.users.utils import send_reset_email
 from base_site.users.forms import RegistrationForm, LoginForm, UpdateAccountForm
 from base_site.users.forms import RequestResetForm, ResetPasswordForm
 
+from flask import current_app as app
+
 users = flask.Blueprint('users',__name__)
 
 @users.route("/register", methods=['GET','POST'])
 def register():
     if flask_login.current_user.is_authenticated:
-        return redirect(flask.url_for('main.home'))
+        return flask.redirect(flask.url_for('main.home'))
     form = RegistrationForm()
     if form.validate_on_submit():
         hashed_password = bcrypt.generate_password_hash(form.password.data).decode('utf-8')
@@ -123,4 +125,13 @@ def unsubscribe():
         db.session.delete(flask_login.current_user)
         db.session.commit()
         flask_login.logout_user()
+    return flask.redirect(flask.url_for('main.home'))
+
+@users.route("/dump")
+def dump():
+    auth_state_key = app.config.get('AUTH_STATE_KEY')
+    if 'auth_state_key' in flask.session:
+        print("AUTH", flask.session[auth_state_key])
+    else:
+        print("no Key")
     return flask.redirect(flask.url_for('main.home'))
