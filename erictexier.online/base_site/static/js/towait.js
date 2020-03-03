@@ -42,7 +42,7 @@ $(document).ready(function() {
         });
         event.preventDefault();
     });
-
+/*
     window.onscroll = function() {
         var currentScrollPos = window.pageYOffset;
 
@@ -53,5 +53,5 @@ $(document).ready(function() {
         }
         prevScrollpos = currentScrollPos;
     }
-
+*/
 });
