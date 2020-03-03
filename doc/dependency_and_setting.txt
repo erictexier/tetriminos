@@ -24,7 +24,8 @@ conda install pillow
 
 conda install -c conda-forge authlib
 conda install google-api-python-client google-auth-httplib2 google-auth-oauthlib
-
+# for command line
+conda install -c conda-forge oauth2client
 conda install numpy
 
 # https://www.youtube.com/watch?v=goToXTC96Co&list=PL-osiE80TeTs4UjLw5MM6OjgkjFeUxCYH&index=13
