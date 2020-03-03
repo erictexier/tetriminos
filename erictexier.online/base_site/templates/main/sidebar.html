@@ -5,35 +5,35 @@
 
     <ul class="list-unstyled components ml-3">
         <li class="active in">
-            <a  class="nav-item nav-link" href="#homeSubmenu" data-toggle="collapse" id="goofy" aria-expanded="false" class="dropdown-toggle" >Jouer</a>
+            <a  class="nav-item nav-link" href="#homeSubmenu" data-toggle="collapse" id="goofy" aria-expanded="false" >Jouer</a>
             <ul class="collapse show list-unstyled" id="homeSubmenu">
-                <li>
-                    <a class="nav-item nav-link" href="{{ url_for('fillit.fillit_route') }}" >Fillit: Project 42</a>
+                <li class="nav-item">
+                    <a class="nav-link" href="{{ url_for('fillit.fillit_route') }}" >Fillit: Project 42</a>
                 </li>
-                <li>
-                    <a class="nav-item nav-link" href="{{ url_for('main.home') }}">Blog</a>
+                <li class="nav-item">
+                    <a class="nav-link" href="{{ url_for('main.home') }}">Blog</a>
                 </li>
             </ul>
         </li>
         <li>
-            <a class="nav-item nav-link" href="#pageSubmenu" data-toggle="collapse" aria-expanded="false" class="dropdown-toggle">Préférences</a>
+            <a class="nav-item nav-link" href="#pageSubmenu" data-toggle="collapse" aria-expanded="false">Préférences</a>
             <ul class="collapse list-unstyled" id="pageSubmenu">
-                <li>
+                <li class="nav-item">
                     <a class="nav-item nav-link" href="#">Not Done:</a>
                 </li>
-                <li>
-                    <a class="nav-item nav-link" href="#">Dynamically Allocated</a>
+                <li class="nav-item">
+                    <a class="nav-link" href="#">Dynamically</a>
                 </li>
-                <li>
-                    <a class="nav-item nav-link" href="#">END</a>
+                <li class="nav-item">
+                    <a class="nav-link" href="#">Generated</a>
                 </li>
             </ul>
         </li>
-        <li>
-            <a class="nav-item nav-link" href="https://www.linkedin.com/in/erictexier/" target="_blank">Profile professionel</a>
+        <li class="nav-item">
+            <a class="nav-link" href="https://www.linkedin.com/in/erictexier/" target="_blank">Profile professionel</a>
         </li>
-        <li>
-            <a class="nav-item nav-link" href="{{ url_for('main.about') }}">A Propos</a>
+        <li class="nav-item">
+            <a class="nav-link" href="{{ url_for('main.about') }}">A Propos</a>
         </li>
     </ul>
 </nav>

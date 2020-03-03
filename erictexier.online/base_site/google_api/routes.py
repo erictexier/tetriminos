@@ -5,12 +5,10 @@ from authlib.integrations.requests_client import OAuth2Session
 import requests
 
 import flask
-from flask import Blueprint
 from flask import current_app as app
 from base_site.google_api import google_auth
 
-
-google_api = Blueprint('google_api', __name__)
+google_api = flask.Blueprint('google_api', __name__)
 
 def no_cache(view):
     @functools.wraps(view)
