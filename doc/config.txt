@@ -56,8 +56,8 @@ autostart=true
 autorestart=true
 stopasgroup=true
 killasgroup=true
-stderr_logfile:/var/log/flask_blog/flask_err.log
-stdout_logfile:/var/log/flask_blog/flask_out.log # need to be created
+stderr_logfile = /var/log/flask_blog/flask_err.log
+stdout_logfile = /var/log/flask_blog/flask_out.log
 
 # restart supervisor
 sudo supervisorctl reload
