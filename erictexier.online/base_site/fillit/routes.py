@@ -1,3 +1,5 @@
+# -*- coding: utf-8 -*-
+
 import flask
 from base_site.fillit import do_tetrino
 from base_site.fillit.fillit_form import FillitForm

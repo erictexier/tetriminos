@@ -1,3 +1,4 @@
+# -*- coding: utf-8 -*-
 import flask
 
 errors = flask.Blueprint('errors', __name__)

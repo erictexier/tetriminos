@@ -1,3 +1,5 @@
+# -*- coding: utf-8 -*-
+
 import flask
 from flask_login import login_required
 from flask_login import current_user

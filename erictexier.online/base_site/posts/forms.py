@@ -1,3 +1,5 @@
+# -*- coding: utf-8 -*-
+
 import flask_wtf
 import wtforms
 from wtforms.validators import DataRequired

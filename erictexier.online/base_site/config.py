@@ -1,3 +1,7 @@
+# -*- coding: utf-8 -*-
+""" Basic config file for running flask
+    User Environment manager to inject environment variable
+"""
 import os
 import json
 from base_site import config_env

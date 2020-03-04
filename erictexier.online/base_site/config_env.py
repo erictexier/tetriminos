@@ -1,7 +1,12 @@
+# -*- coding: utf-8 -*-
+
 import os
 import sys
 
 def get_config_files():
+    """ 
+    Envi is a python package to build environment variable base on package
+    """
 
     main_dev = os.path.join(os.environ.get("DSKENV","/"), 'python')
     if not os.path.exists(main_dev):
