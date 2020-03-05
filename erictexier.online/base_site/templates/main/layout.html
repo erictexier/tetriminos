@@ -21,7 +21,9 @@
         {% include "main/navigation.html" %}
         <main class="container_wrapper">
             <div class="row">
+                <div class="col-md-2 px-0">
                 {% include "main/sidebar.html" %}
+                </div>
                 <div class="col-md-9 mr-0">
                     {% with messages = get_flashed_messages(with_categories=true) %}
                         {% if messages %}
@@ -35,7 +37,7 @@
                     {% block content %}{% endblock %}
                 </div>
             </div>
-            <div id="footer" class="container.fluid">
+            <div id="footer" class="container">
                 {% include "main/footer.html" %}
             </div>
 
