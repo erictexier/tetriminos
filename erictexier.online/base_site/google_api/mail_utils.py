@@ -15,6 +15,7 @@ from oauth2client import client
 from oauth2client import tools
 from oauth2client import Storage
 
+
 def create_message(sender, to, subject, message_text):
     """Create a message for an email.
 
@@ -35,7 +36,7 @@ def create_message(sender, to, subject, message_text):
 
 
 def send_message(service, user_id, message):
-  """Send an email message.
+    """ Send an email message.
 
     Args:
         service: Authorized Gmail API service instance.
@@ -47,10 +48,11 @@ def send_message(service, user_id, message):
         Sent Message.
     """
     try:
-        message = (service.users().messages().send(userId=user_id, body=message)
-                .execute())
+        message = (service.users().messages().send(
+                                userId=user_id,
+                                body=message).execute())
         print('Message Id: %s' % message['id'])
         return message
     except urllib.error.HTTPError as error:
-        print('An error occurred: {}'.format(error)
+        print('An error occurred: {}'.format(error))
     return None

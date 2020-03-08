@@ -10,12 +10,13 @@ try:
     import tetrino
 except Exception as e:
     class TetrinoDump:
-        @staticmethod 
+        @staticmethod
         def resolve(cmd):
             return "TETRINO NOT    ACCESSIBLE UNDER CONSTRUCTION ......."
     tetrino = TetrinoDump()
 
-tshape = [0xf000,
+tshape = [
+        0xf000,
         0xe200,
         0xe400,
         0xe800,
@@ -35,7 +36,9 @@ tshape = [0xf000,
         0x4C40,
         0x2E00]
 
-randrgb = [[random.randint(60,200),random.randint(80,200),random.randint(120,200)] for i in range(26)]
+randrgb = [[random.randint(60, 200),
+            random.randint(80, 200),
+            random.randint(120, 200)] for i in range(26)]
 randcolor = ["#%x%x%x" % (x[0], x[1], x[2]) for x in randrgb]
 cletter = ["%c" % (x + 65) for x in range(26)]
 colormap = dict(zip(cletter, randcolor))
@@ -43,6 +46,7 @@ colormap = dict(zip(cletter, randcolor))
 colormap3d = dict(zip(cletter, randrgb))
 colormap[' '] = "#ffffff"
 colormap['.'] = "#ffffff"
+
 
 class Letterbox(object):
     """
@@ -54,6 +58,7 @@ class Letterbox(object):
             self.color = colormap[c]
         else:
             self.color = "#000000"
+
 
 class Tetrino(object):
     """
@@ -68,15 +73,17 @@ class Tetrino(object):
         '''
         if len(self.data) < 1:
             return
-        afile = tempfile.mkstemp(prefix = 'fillit-',suffix=datetime.datetime.utcnow().strftime("-%Y-%m-%d-%H-%M"))[1]
+        afile = tempfile.mkstemp(
+            prefix='fillit-',
+            suffix=datetime.datetime.utcnow().strftime("-%Y-%m-%d-%H-%M"))[1]
         tet = list()
-        n = 65;
-        with open(afile,"w") as f:
+        n = 65
+        with open(afile, "w") as f:
             for i in self.data:
                 letters = list()
                 for s in i:
                     f.write(s)
-                    letters.append(s.replace("#","%c" % n))
+                    letters.append(s.replace("#", "%c" % n))
                     f.write('\n')
                 n += 1
                 tet.append(letters)
@@ -93,10 +100,14 @@ class Tetrino(object):
                 self.stat += 1
         if rep > 0:
             self.stat = 100 - (self.stat * 100 / rep)
-        self.result = list(map(lambda i: result[i:i+self.sqa], range(0,rep,self.sqa)))
-        with open(afile,"a+") as out:
+        self.result = list(map(lambda i: result[i:i + self.sqa],
+                               range(0, rep, self.sqa)))
+        with open(afile, "a+") as out:
             out.write("grid:\n")
-            out.write('{}\nsec:{}-{}%'.format('\n'.join(self.result), self.delta, self.stat))
+            out.write('{}\nsec:{}-{}%'.format(
+                                        '\n'.join(self.result),
+                                        self.delta,
+                                        self.stat))
 
     @staticmethod
     def wrap_box_result(aline):
@@ -105,13 +116,13 @@ class Tetrino(object):
             result.append([Letterbox(x) for x in l])
         return result
 
-    def show_in_line(self, col = 4, color = True):
+    def show_in_line(self, col=4, color=True):
         """ Split the input to be display as line in html
         """
         cdata = self.data[:]
         all = []
         line = []
-        for i,d in enumerate(self.data):
+        for i, d in enumerate(self.data):
             if i % col == 0:
                 aline = []
                 for j in range(col):
@@ -142,11 +153,14 @@ class Tetrino(object):
         """
         global colormap3d
         global colormap
-        randrgb = [[random.randint(60,200),random.randint(80,200),random.randint(120,200)] for i in range(26)]
+        randrgb = [[random.randint(60, 200),
+                    random.randint(80, 200),
+                    random.randint(120, 200)] for i in range(26)]
         randcolor = ["#%x%x%x" % (x[0], x[1], x[2]) for x in randrgb]
         cletter = ["%c" % (x + 65) for x in range(26)]
         colormap = dict(zip(cletter, randcolor))
-        # for 3d we keep the color as 3 int to allow for alpha to be added easely
+        # for 3d we keep the color as 3 int to allow
+        # for alpha to be added easely
         colormap3d = dict(zip(cletter, randrgb))
         colormap[' '] = "#ffffff"
         colormap['.'] = "#ffffff"
@@ -169,7 +183,7 @@ class Tetrino(object):
         l2 = charline[(shape & 0x0f00) >> 8]
         l3 = charline[(shape & 0x00f0) >> 4]
         l4 = charline[shape & 0x000f]
-        return [l1,l2,l3,l4]
+        return [l1, l2, l3, l4]
 
     @staticmethod
     def lookup_letter(res, letter):
@@ -185,37 +199,40 @@ class Tetrino(object):
                     return res[:y] + [new_r] + res[y+1:], x, y
         return (result, destx, desty)
 
-    def get_segment_anim(self, 
-                        nb_col = 4,
-                        xspace = 14,
-                        yspace = 14,
-                        rmargin = 10,
-                        tmargin = 10,
-                        spacing = 12,
-                        for3d = False,
+    def get_segment_anim(
+                        self,
+                        nb_col=4,
+                        xspace=14,
+                        yspace=14,
+                        rmargin=10,
+                        tmargin=10,
+                        spacing=12,
+                        for3d=False,
                         scalegame=0.):
         segments = list()
         res = self.result
-        start = self.show_in_line(nb_col, color = False)
+        start = self.show_in_line(nb_col, color=False)
         table1offset = (tmargin + spacing + (yspace * len(start))) * scalegame
-        sizex = ((nb_col + 2)  * xspace) + rmargin
+        sizex = ((nb_col + 2) * xspace) + rmargin
 
         for y, line in enumerate(start):
             for x, letter in enumerate(line):
-                if letter not in [' ', '.','-']:
+                if letter not in [' ', '.', '-']:
                     res, destx, desty = self.lookup_letter(res, letter)
-                    segments.append([[x, y],[destx, desty], letter])
+                    segments.append([[x, y], [destx, desty], letter])
 
         if for3d:
-            segments = [ [[(val[0][0] * xspace) + rmargin, (val[0][1] * yspace) + tmargin],
-                     [(val[1][0] * xspace) + rmargin + (sizex/4), (val[1][1] *  yspace) + table1offset],
-                     colormap3d[val[2]]
-                    ] for val in segments]
+            segments = [[[(val[0][0] * xspace) + rmargin,
+                          (val[0][1] * yspace) + tmargin],
+                         [(val[1][0] * xspace) + rmargin + (sizex/4),
+                          (val[1][1] * yspace) + table1offset],
+                        colormap3d[val[2]]] for val in segments]
         else:
-            segments = [ [[(val[0][0] * xspace) + rmargin, (val[0][1] * yspace) + tmargin],
-                     [(val[1][0] * xspace) + rmargin + (sizex/4), (val[1][1] * yspace) + table1offset],
-                     colormap[val[2]]
-                    ] for val in segments]
+            segments = [[[(val[0][0] * xspace) + rmargin,
+                          (val[0][1] * yspace) + tmargin],
+                         [(val[1][0] * xspace) + rmargin + (sizex/4),
+                          (val[1][1] * yspace) + table1offset],
+                        colormap[val[2]]] for val in segments]
         return segments
 
 if __name__ == '__main__':

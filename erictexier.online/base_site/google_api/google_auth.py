@@ -19,6 +19,7 @@ def is_logged_in():
         return True
     return False
 
+
 def build_credentials(option):
     if not is_logged_in():
         raise Exception('User must be logged in')
@@ -36,18 +37,22 @@ def build_credentials(option):
                 client_secret=CLIENT_SECRET,
                 token_uri=ACCESS_TOKEN_URI)
 
+
 def get_user_info():
 
     credentials = build_credentials()
-    oauth2_client = googleapiclient.discovery.build('oauth2', 'v2',
+    oauth2_client = googleapiclient.discovery.build('oauth2',
+                                                    'v2',
                                                     credentials=credentials)
     return oauth2_client.userinfo().get().execute()
+
 
 def get_client(client_id):
     """ should maybe become a singleton  with """
     if client_id in ['', None]:
         return None
     return WebApplicationClient(client_id)
+
 
 def get_google_provider_cfg(a_discovery_url):
     return requests.get(a_discovery_url).json()

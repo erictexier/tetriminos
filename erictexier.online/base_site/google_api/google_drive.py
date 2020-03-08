@@ -13,6 +13,9 @@ from werkzeug.utils import secure_filename
 
 app = flask.Blueprint('google_drive', __name__)
 
+
 def build_drive_api_v3():
     credentials = build_credentials()
-    return googleapiclient.discovery.build('drive', 'v3', credentials=credentials).files()
+    return googleapiclient.discovery.build('drive',
+                                           'v3',
+                                           credentials=credentials).files()

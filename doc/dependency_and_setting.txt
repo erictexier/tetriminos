@@ -28,6 +28,12 @@ conda install google-api-python-client google-auth-httplib2 google-auth-oauthlib
 conda install -c conda-forge oauth2client
 conda install numpy
 
+
+
+# conda to move environment
+https://www.anaconda.com/moving-conda-environments/
+
+
 # https://www.youtube.com/watch?v=goToXTC96Co&list=PL-osiE80TeTs4UjLw5MM6OjgkjFeUxCYH&index=13
 Python Flask Tutorial: Deploying Your Application (Option #1) - Deploy to a Linux Server
 ubuntu - nginx - gunicorn - web Application - supervisor 
