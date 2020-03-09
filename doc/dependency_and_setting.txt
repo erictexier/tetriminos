@@ -29,7 +29,8 @@ conda install -y google-api-python-client google-auth-httplib2 google-auth-oauth
 # for command line
 conda install -y -c conda-forge oauth2client
 conda install -y numpy
-
+# for test site
+conda install -c conda-forge pytest-pep8
 # for tetriminos don't forget to reinstall with the new env 
 
 # conda to move environment
