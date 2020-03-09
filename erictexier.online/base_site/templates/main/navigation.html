@@ -1,26 +1,25 @@
 <header class="site-header">
-    <nav class="navbar navbar-expand-md navbar-dark bg-steel-light fixed-top" id="navbar">
+    <nav class="navbar navbar-light navbar-expand-md bg-steel-light primary fixed-top" id="navbar">
 
-        <a class="navbar-brand mr-4" href="{{ url_for('main.home') }}"><img src="{{ url_for('static', filename = 'icon/passeit_logo_short.png') }}" width="100" alt="none">
-        <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarToggle">
+        <a class="navbar-brand mr-4" href="{{ url_for('main.home') }}"><img src="{{ url_for('static', filename = 'icon/passeit_logo_short.png') }}" width="100">
+        <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarToggle" aria-controls="navbarNavDropdown" aria-expanded="false" >
             <span class="navbar-toggler-icon"></span>
         </button>
 
-        <div class="collapse navbar-collapse active in" id="navbarToggle">
+        <div class="navbar-collapse collapse" id="navbarToggle">
                 <ul class="navbar-nav ml-auto">
-                    <li class="nav-item">
+                    <li class="nav-item in">
                         <a class="nav-link" href="{{ url_for('main.home') }}">Home</a>
                     </li>
                     <li class="nav-item">
                         <a class="nav-link" href="{{ url_for('main.about') }}">About</a>
                     </li>
-
                     {% if current_user.is_authenticated %}
-                      <a class="nav-item nav-link" href="{{ url_for('posts.new_post') }}">New Post</a>
-                      <a class="nav-item nav-link" href="{{ url_for('users.account') }}">Account</a>
-                      <a class="nav-item nav-link" href="{{ url_for('users.logout') }}">Logout</a>
+                    <li class="nav-item"><a class="nav-item nav-link" href="{{ url_for('posts.new_post') }}">New Post</a></li>
+                    <li class="nav-item"><a class="nav-item nav-link" href="{{ url_for('users.account') }}">Account</a></li>
+                    <li class="nav-item"><a class="nav-item nav-link" href="{{ url_for('users.logout') }}">Logout</a></li>
                     {% else %}
-                      <a class="nav-item nav-link" href="{{ url_for('users.login') }}">Login</a>
+                    <li class="nav-item"><a class="nav-item nav-link" href="{{ url_for('users.login') }}">Login</a></li>
                     {% endif %}
                 </ul>
             </div>
