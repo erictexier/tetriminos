@@ -1,7 +1,9 @@
 conda config --add channels conda-forge
 conda config --set channel_priority strict
 
-conda install flask
+conda install -y flask
+# not working: conda install -y yaml
+# use instead: pip install pyyaml
 
 # start flask for flask (optional)
 export FLASK_APP=flask_blog.py
@@ -13,22 +15,22 @@ export FLASK_DEBUG=1
 
 
 #dependency
-conda install flask-wtf
-conda install -c conda-forge flask-sqlalchemy
-conda install psycopg2
-conda install flask-migrate
-conda install -c conda-forge flask-bcrypt
-conda install flask-login
-conda install flask-mail
-conda install pillow
+conda install -y flask-wtf
+conda install -y -c conda-forge flask-sqlalchemy
+conda install -y psycopg2
+conda install -y flask-migrate
+conda install -y -c conda-forge flask-bcrypt
+conda install -y flask-login
+conda install -y flask-mail
+conda install -y pillow
 
-conda install -c conda-forge authlib
-conda install google-api-python-client google-auth-httplib2 google-auth-oauthlib
+conda install -y -c conda-forge authlib
+conda install -y google-api-python-client google-auth-httplib2 google-auth-oauthlib
 # for command line
-conda install -c conda-forge oauth2client
-conda install numpy
+conda install -y -c conda-forge oauth2client
+conda install -y numpy
 
-
+# for tetriminos don't forget to reinstall with the new env 
 
 # conda to move environment
 https://www.anaconda.com/moving-conda-environments/
