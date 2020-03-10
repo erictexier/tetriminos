@@ -20,11 +20,11 @@ SCOPES = ['https://www.googleapis.com/auth/drive.metadata.readonly']
 API_SERVICE_NAME = 'drive'
 API_VERSION = 'v2'
 
-drive_api = Blueprint('google_api', __name__)
+drive_api = Blueprint('drive_api', __name__)
 
 
 @drive_api.route('/drive')
-def index():
+def route_drive_index():
     return print_index_table()
 
 

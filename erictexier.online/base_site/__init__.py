@@ -50,6 +50,7 @@ def create_app(config_class=Config):
     from base_site.errors.handlers import errors
 
     from base_site.google_api.routes import google_api
+    from base_site.drive_api.readonly_drive import drive_api
 
     app.register_blueprint(users)
     app.register_blueprint(posts)
@@ -57,6 +58,7 @@ def create_app(config_class=Config):
     app.register_blueprint(fillit)
     app.register_blueprint(carousel)
     app.register_blueprint(google_api)
+    app.register_blueprint(drive_api)
     app.register_blueprint(errors)
     app.logger.info("%s created" % __name__)
     return app
