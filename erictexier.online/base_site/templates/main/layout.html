@@ -22,9 +22,9 @@
         <main class="container_wrapper">
             <div class="row">
                 <div class="col-md-2 px-0">
-                {% include "main/sidebar.html" %}
+                    {% include "main/sidebar.html" %}
                 </div>
-                <div class="col-md-9 mr-0">
+                <div class="col-md-9 mr-0 mb-2">
                     {% with messages = get_flashed_messages(with_categories=true) %}
                         {% if messages %}
                             {% for category, message in messages %}
