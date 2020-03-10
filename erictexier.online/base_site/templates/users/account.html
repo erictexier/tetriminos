@@ -1,14 +1,14 @@
 {% extends "main/layout.html" %}
 {% block content %}
-  <div class="content-section">
+<div class="content-section">
     <div class="media">
-      <img class="img-thumbnail account-img" src="{{ image_file }}">
-      <div class="media-body">
+        <img class="img-thumbnail account-img" src="{{ image_file }}">
+        <div class="media-body">
         <h2 class="account-heading"> {{current_user.username }} </h2>
         <p class="text-secondary">{{ current_user.email }}</p>
-      </div>
+        </div>
     </div>
-   
+
     <form method="POST" action="" enctype="multipart/form-data">
         {{ form.hidden_tag() }}
         <fieldset class="form-group">
@@ -60,5 +60,5 @@
             Remove account and all posts? <a class="ml-2" href="{{ url_for('users.unsubscribe') }}"> Delete All</a> 
         </small>
     </div>
-  </div>
+</div>
 {% endblock content %}
