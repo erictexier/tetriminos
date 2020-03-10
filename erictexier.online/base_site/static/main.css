@@ -110,7 +110,7 @@ margin-bottom: 16px;
 font-size: 2.5rem;
 }
 
-#navbar {
+#navbartop {
   position: fixed; /* Make it stick/fixed */
   top: 0; /* Stay on top */
   width: 100%; /* Full width */
@@ -119,7 +119,7 @@ font-size: 2.5rem;
 }
 
 /* Style the navbar links */
-#navbar a {
+#navbartop a {
   float: left;
   display: block;
   text-align: center;

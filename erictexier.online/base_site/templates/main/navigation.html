@@ -1,14 +1,15 @@
 <header class="site-header">
     <nav class="navbar navbar-light navbar-expand-md bg-steel-light primary fixed-top" id="navbar">
 
-        <a class="navbar-brand mr-4" href="{{ url_for('main.home') }}"><img src="{{ url_for('static', filename = 'icon/passeit_logo_short.png') }}" width="100">
-        <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarToggle" aria-controls="navbarNavDropdown" aria-expanded="false" >
-            <span class="navbar-toggler-icon"></span>
-        </button>
-
+        <div class="navbar-brand mr-4">
+            <img src="{{ url_for('static', filename = 'icon/passeit_logo_short.png') }}" width="100">
+            <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarToggle" aria-controls="navbarNavDropdown" aria-expanded="false" >
+                <span class="navbar-toggler-icon"></span>
+            </button>
+        </div>
         <div class="navbar-collapse collapse" id="navbarToggle">
                 <ul class="navbar-nav ml-auto">
-                    <li class="nav-item in">
+                    <li class="nav-item">
                         <a class="nav-link" href="{{ url_for('main.home') }}">Home</a>
                     </li>
                     <li class="nav-item">
