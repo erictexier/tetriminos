@@ -1,0 +1,25 @@
+
+- envi update
+- dsk update
+
+
+TO do:
+- move the runtime environment:
+
+ from $(HOME)/miniconda3
+ to:  ???
+
+ thing about install tetrino module or move fillit as a package
+
+
+ - tetrino update
+ At this stage it's a simple cp and supervisor restart
+ Don't forget to remove the static directory to avoid conflic
+TO do:
+ implement esn_update_soft to install change 
+
+From repo in ~/workspace to /var/www
+/opt/esn/www/tetrimino/3.7.6$ sudo /home/eric/miniconda3/bin/conda create -p /opt/esn/www/tetrimino/3.7.6/env  --clone xaosenv
+-- go and build fillit
+
+cp works/opt/esn/www/tetrimino/3.7.6/erictexier.online/
