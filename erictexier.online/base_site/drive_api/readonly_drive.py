@@ -23,12 +23,12 @@ API_VERSION = 'v2'
 drive_api = Blueprint('google_api', __name__)
 
 
-@app.route('/drive')
+@drive_api.route('/drive')
 def index():
     return print_index_table()
 
 
-@app.route('/drive_api/test')
+@drive_api.route('/drive_api/test')
 def test_api_request():
     if 'credentials' not in flask.session:
         return flask.redirect('drive_api.authorize')
@@ -50,7 +50,7 @@ def test_api_request():
     return flask.jsonify(**files)
 
 
-@app.route('/drive_api/authorize')
+@drive_api.route('/drive_api/authorize')
 def authorize():
     # Create flow instance to manage the OAuth 2.0 Authorization
     # Grant Flow steps.
@@ -80,7 +80,7 @@ def authorize():
     return flask.redirect(authorization_url)
 
 
-@app.route('/drive_api/oauth2callback')
+@drive_api.route('/drive_api/oauth2callback')
 def oauth2callback():
     # Specify the state when creating the flow in the callback so that it can
     # verified in the authorization server response.
@@ -105,7 +105,7 @@ def oauth2callback():
     return flask.redirect(flask.url_for('drive_api.test_api_request'))
 
 
-@app.route('/drive_api/revoke')
+@drive_api.route('/drive_api/revoke')
 def revoke():
     if 'credentials' not in flask.session:
         return ('You need to <a href="/authorize">authorize</a> before ' +
@@ -126,7 +126,7 @@ def revoke():
         return('An error occurred.' + print_index_table())
 
 
-@app.route('/drive_api/clear')
+@drive_api.route('/drive_api/clear')
 def clear_credentials():
     if 'credentials' in flask.session:
         del flask.session['credentials']
