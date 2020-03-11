@@ -23,12 +23,12 @@ API_VERSION = 'v2'
 drive_api = Blueprint('drive_api', __name__)
 
 
-@drive_api.route('/drive')
+@drive_api.route('/drive_api')
 def route_drive_index():
     return print_index_table()
 
 
-@drive_api.route('/drive_api/test')
+@drive_api.route('/drive_api/test_api_request')
 def test_api_request():
     if 'credentials' not in flask.session:
         return flask.redirect(flask.url_for('drive_api.authorize'))
