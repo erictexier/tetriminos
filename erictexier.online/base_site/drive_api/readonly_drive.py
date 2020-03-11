@@ -108,8 +108,8 @@ def oauth2callback():
 @drive_api.route('/drive_api/revoke')
 def revoke():
     if 'credentials' not in flask.session:
-        return ('You need to <a href="/authorize">authorize</a> before ' +
-                'testing the code to revoke credentials.')
+        return('You need to <a href="/drive_api/authorize">authorize</a>' +
+                'before testing the code to revoke credentials.')
 
     credentials = google.oauth2.credentials.Credentials(
         **flask.session['credentials'])

@@ -49,5 +49,6 @@
         "titleBar.activeBackground": "#191919cc",
         "titleBar.activeForeground":"#FFFFFF",
         "statusBar.background" : "#191919cc",
+        "activityBar.background": "#b0c4c4",
     }
 }
