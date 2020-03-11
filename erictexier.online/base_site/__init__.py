@@ -7,7 +7,7 @@ from flask_login import LoginManager
 from flask_mail import Mail
 from base_site.config import Config
 
-
+import logging
 from logging.config import dictConfig
 
 dictConfig({
@@ -60,5 +60,6 @@ def create_app(config_class=Config):
     app.register_blueprint(google_api)
     app.register_blueprint(drive_api)
     app.register_blueprint(errors)
+    # logging.getLogger('googleapicliet.discovery_cache').setLevel(logging.ERROR)
     app.logger.info("%s created" % __name__)
     return app
