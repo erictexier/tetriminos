@@ -19,7 +19,7 @@ def is_logged_in():
         return True
     return False
 
-def init_flow_authorize(configdata):
+def init_flow_authorize(configdata, state=None):
     # Create flow instance to manage the OAuth 2.0 Authorization
     # Grant Flow steps.
     client_secret_file = configdata.get("CLIENT_SECRETS_FILE", "")
@@ -28,8 +28,13 @@ def init_flow_authorize(configdata):
     scopes = configdata.get("AUTHORIZATION_SCOPE", "")
     if scopes is "":
         return None
-    return google_auth_oauthlib.flow.Flow.from_client_secrets_file(
+    if state:
+        return google_auth_oauthlib.flow.Flow.from_client_secrets_file(
                                             client_secret_file, scopes=scopes)
+    return google_auth_oauthlib.flow.Flow.from_client_secrets_file(
+                                            client_secret_file,
+                                            scopes=scopes,
+                                            state = state)
 
 def build_credentials(option):
     if not is_logged_in():
