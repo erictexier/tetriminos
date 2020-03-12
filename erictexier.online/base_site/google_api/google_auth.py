@@ -11,7 +11,7 @@ from authlib.integrations.requests_client import OAuth2Session
 from oauthlib.oauth2 import WebApplicationClient
 import google.oauth2.credentials
 import googleapiclient.discovery
-
+import google_auth_oauthlib.flow
 
 def is_logged_in():
     k = os.environ.get('AUTH_TOKEN_KEY', "")
@@ -19,6 +19,17 @@ def is_logged_in():
         return True
     return False
 
+def init_flow_authorize(configdata):
+    # Create flow instance to manage the OAuth 2.0 Authorization
+    # Grant Flow steps.
+    client_secret_file = configdata.get("CLIENT_SECRETS_FILE", "")
+    if client_secret_file != "" and os.path.exists(client_secret_file) is False:
+        return None
+    scopes = configdata.get("AUTHORIZATION_SCOPE", "")
+    if scopes is "":
+        return None
+    return google_auth_oauthlib.flow.Flow.from_client_secrets_file(
+                                            client_secret_file, scopes=scopes)
 
 def build_credentials(option):
     if not is_logged_in():

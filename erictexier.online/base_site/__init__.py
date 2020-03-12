@@ -10,7 +10,7 @@ from base_site.config import Config
 import logging
 from logging.config import dictConfig
 
-dictConfig({
+logdict = {
     'version': 1,
     'formatters': {'default': {
         'format': '[%(asctime)s] %(levelname)s in %(module)s: %(message)s',
@@ -24,7 +24,9 @@ dictConfig({
         'level': 'INFO',
         'handlers': ['wsgi']
     }
-})
+    }
+logging.config.dictConfig(logdict)
+logging.getLogger('googleapicliet.discovery_cache').setLevel(logging.ERROR)
 
 db = SQLAlchemy()
 bcrypt = Bcrypt()
@@ -60,6 +62,5 @@ def create_app(config_class=Config):
     app.register_blueprint(google_api)
     app.register_blueprint(drive_api)
     app.register_blueprint(errors)
-    # logging.getLogger('googleapicliet.discovery_cache').setLevel(logging.ERROR)
     app.logger.info("%s created" % __name__)
     return app
