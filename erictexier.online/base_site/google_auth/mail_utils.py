@@ -45,6 +45,8 @@ def create_message(sender, to, subject, message_text):
         An object containing a base64url encoded email object.
     """
     message = MIMEText(message_text)
+    if isinstance(to, list):
+        to = ",".join(to)
     message['to'] = to
     message['from'] = sender
     message['subject'] = subject
@@ -99,4 +101,3 @@ def create_message_with_attachment(sender, to, subject, message_text, file):
     message.attach(msg)
 
     return {'raw': base64.urlsafe_b64encode(message.as_bytes()).decode()}
-

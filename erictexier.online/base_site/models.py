@@ -2,6 +2,7 @@
 
 from datetime import datetime
 from itsdangerous import TimedJSONWebSignatureSerializer as Serializer
+from flask_dance.consumer.storage.sqla import OAuthConsumerMixin
 from flask import current_app
 from flask_login import UserMixin
 from base_site import db, login_manager
@@ -41,6 +42,12 @@ class User(db.Model, UserMixin):
 
     def __repr__(self):
         return f"User('{self.username}', '{self.email}', '{self.image_file}')"
+
+
+class OAuth(db.Model, OAuthConsumerMixin):
+    provider_user_id = db.Column(db.String(256), unique=True)
+    user_id = db.Column(db.Integer, db.ForeignKey(User.id))
+    user = db.relationship(User)
 
 
 class Post(db.Model):

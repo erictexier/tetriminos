@@ -59,6 +59,7 @@ def loggin_call_back():
     provider_cfg = google_auth.get_google_provider_cfg(
                                 app.config.get("DISCOVERY_URL"))
     token_endpoint = provider_cfg["token_endpoint"]
+    print("TOKEN_ENDPOINT",token_endpoint)
     client_id = app.config.get("CLIENT_ID", None)
     client_secret = app.config.get("CLIENT_SECRET", None)
     client = google_auth.get_client(client_id)
@@ -74,6 +75,7 @@ def loggin_call_back():
                                 data=body,
                                 auth=(client_id, client_secret),)
     # Parse the tokens!
+    print(json.dumps(token_response.json()))
     client.parse_request_body_response(json.dumps(token_response.json()))
     # Now that you have tokens (yay) let's find and hit the URL
     # from Google that gives you the user's profile information,
@@ -90,7 +92,8 @@ def loggin_call_back():
         users_email = userinfo_response.json()["email"]
         picture = userinfo_response.json()["picture"]
         users_name = userinfo_response.json()["given_name"]
-        app.logger.info(unique_id, users_email, picture, users_name,)
+        #app.logger.info(unique_id, users_email, picture, users_name,)
+        print(unique_id, users_email, picture, users_name,)
         return " IN PROGRESS FOR NOW "
     else:
         return "User email not available or not verified by Google.", 400

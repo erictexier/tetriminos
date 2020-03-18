@@ -9,15 +9,20 @@ import requests
 import google.oauth2.credentials
 import google_auth_oauthlib.flow
 import googleapiclient.discovery
-from base_site.google_api import google_auth
+
+#from base_site.google_api import google_auth
+from base_site.google_api import mail_utils
 
 # This OAuth 2.0 access scope allows for full read/write access to the
 # authenticated user's account and requires requests to use an SSL connection.
 # SCOPES = ['https://www.googleapis.com/auth/drive.metadata.readonly']
 API_SERVICE_NAME = 'drive'
-API_VERSION = 'v2'
+API_VERSION = 'v3'
 
 drive_api = Blueprint('drive_api', __name__)
+
+
+from base_site.google import google_auth
 
 
 @drive_api.route('/drive_api')
@@ -27,16 +32,34 @@ def route_drive_index():
 
 @drive_api.route('/drive_api/test_api_request')
 def test_api_request():
+    print("TRY"*20)
     if 'credentials' not in flask.session:
         return flask.redirect(flask.url_for('drive_api.authorize'))
 
     # Load credentials from the session.
     credentials = google.oauth2.credentials.Credentials(
-        **flask.session['credentials'])
+                                        **flask.session['credentials'])
 
-    drive = googleapiclient.discovery.build(
-        API_SERVICE_NAME, API_VERSION, credentials=credentials)
+    drive = googleapiclient.discovery.build(API_SERVICE_NAME,
+                                            API_VERSION,
+                                            cache_discovery=False,
+                                            credentials=credentials)
 
+
+    data = mail_utils.create_message("erictexier@eclecticstudionet.com",
+                                     "e.texier@icloud.com",
+                                     "bonjour de bonjour", "Rien a dire")
+
+    mails = googleapiclient.discovery.build('gmail',
+                                            'v1',
+                                            cache_discovery=False,
+                                            credentials=credentials)
+
+    user_id = credentials.client_id
+    print(mails.users())
+    msg = mail_utils.send_message(mails, "me", data)
+    results = mails.users().labels().list(userId='me').execute()
+    print(results)
     files = drive.files().list().execute()
 
     # Save credentials back to session in case access token was refreshed.
@@ -44,7 +67,8 @@ def test_api_request():
     #              credentials in a persistent database instead.
     flask.session['credentials'] = credentials_to_dict(credentials)
 
-    return flask.jsonify(**files)
+    #return flask.jsonify(**files)
+    return flask.jsonify(**results)
 
 
 @drive_api.route('/drive_api/authorize')
@@ -52,7 +76,7 @@ def authorize():
     # Create flow instance 
     flow = google_auth.init_flow_authorize(app.config)
 
-
+    print("IN AUTHORIZE"*10)
     # The URI created here must exactly match one of the authorized redirect
     # URIs for the OAuth 2.0 client, which you configured in the API Console.
     # If this value doesn't match an authorized URI, you will get a
@@ -67,6 +91,8 @@ def authorize():
             access_type='offline',
             # Enable incremental authorization. Recommended as a best practice.
             include_granted_scopes='true')
+
+    print("authorization_url" * 199,authorization_url)
 
     # Store the state so the callback can verify the auth server response.
     flask.session['state'] = state
@@ -83,9 +109,9 @@ def oauth2callback():
                                            state = flask.session['state'])
     flow.redirect_uri = flask.url_for('drive_api.oauth2callback',
                                       _external=True)
-
     # Use the authorization server's response to fetch the OAuth 2.0 tokens.
     authorization_response = flask.request.url
+    print("y"*100) 
     flow.fetch_token(authorization_response=authorization_response)
 
     # Store credentials in the session.
@@ -94,6 +120,8 @@ def oauth2callback():
     credentials = flow.credentials
     flask.session['credentials'] = credentials_to_dict(credentials)
 
+    print(flask.session['credentials'])
+    print("z"*100) 
     return flask.redirect(flask.url_for('drive_api.test_api_request'))
 
 
@@ -107,9 +135,9 @@ def revoke():
         **flask.session['credentials'])
 
     revoke = requests.post(
-        'https://oauth2.googleapis.com/revoke',
-        params={'token': credentials.token},
-        headers={'content-type': 'application/x-www-form-urlencoded'})
+                'https://oauth2.googleapis.com/revoke',
+                params={'token': credentials.token},
+                headers={'content-type': 'application/x-www-form-urlencoded'})
 
     status_code = getattr(revoke, 'status_code')
     if status_code == 200:

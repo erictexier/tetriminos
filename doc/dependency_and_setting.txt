@@ -17,6 +17,7 @@ export FLASK_DEBUG=1
 #dependency
 conda install -y flask-wtf
 conda install -y -c conda-forge flask-sqlalchemy
+conda install -y -c conda-forge sqlalchemy-utils
 conda install -y psycopg2
 conda install -y flask-migrate
 conda install -y -c conda-forge flask-bcrypt
@@ -27,8 +28,10 @@ conda install -y pillow
 conda install -y -c conda-forge authlib
 conda install -y google-api-python-client google-auth-httplib2 google-auth-oauthlib
 # for command line
+conda install flash-dance
 conda install -y -c conda-forge oauth2client
 conda install -y numpy
+conda install -y -c conda-forge google-cloud-sdk
 # for test site
 conda install -c conda-forge pytest-pep8
 # for tetriminos don't forget to reinstall with the new env 

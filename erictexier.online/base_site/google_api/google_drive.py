@@ -18,4 +18,5 @@ def build_drive_api_v3():
     credentials = build_credentials()
     return googleapiclient.discovery.build('drive',
                                            'v3',
+                                           cache_discovery=False,
                                            credentials=credentials).files()

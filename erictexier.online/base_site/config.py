@@ -57,8 +57,14 @@ class Config(object):
                     pt=confdata.get("POSTGRES_PORT", 5432),
                     db=confdata.get("POSTGRES_DB", "flaskprofiledb"))
         del confdata
+
+    @classmethod
+    def set(cls, key, value):
+        setattr(cls, key, value)
+
+
 for i in data:
     if i != 'Flask':
         for k in data[i]:
             if k != 'api':
-                exec("Config.%s = %r" % (k, data[i][k]), locals())
+                Config.set(k, data[i][k])

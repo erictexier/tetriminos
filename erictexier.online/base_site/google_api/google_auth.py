@@ -6,6 +6,10 @@ import os
 import functools
 import flask
 import requests
+import json
+import base64
+#import logging
+#logging.getLogger('googleapicliet.discovery_cache').setLevel(logging.ERROR)
 
 from authlib.integrations.requests_client import OAuth2Session
 from oauthlib.oauth2 import WebApplicationClient
@@ -13,7 +17,7 @@ import google.oauth2.credentials
 import googleapiclient.discovery
 import google_auth_oauthlib.flow
 
-def is_logged_in():
+def is_token_in():
     k = os.environ.get('AUTH_TOKEN_KEY', "")
     if k and k in flask.session:
         return True
@@ -22,19 +26,50 @@ def is_logged_in():
 def init_flow_authorize(configdata, state=None):
     # Create flow instance to manage the OAuth 2.0 Authorization
     # Grant Flow steps.
-    client_secret_file = configdata.get("CLIENT_SECRETS_FILE", "")
-    if client_secret_file != "" and os.path.exists(client_secret_file) is False:
+    client_sfile = configdata.get("CLIENT_SECRETS_FILE", "")
+    if client_sfile != "" and os.path.exists(client_sfile) is False:
         return None
     scopes = configdata.get("AUTHORIZATION_SCOPE", "")
-    if scopes is "":
+
+    if scopes == "":
         return None
+
     if state:
         return google_auth_oauthlib.flow.Flow.from_client_secrets_file(
-                                            client_secret_file, scopes=scopes)
+                                            client_sfile, scopes=scopes)
     return google_auth_oauthlib.flow.Flow.from_client_secrets_file(
-                                            client_secret_file,
+                                            client_sfile,
                                             scopes=scopes,
                                             state = state)
+
+
+def credentials_to_file(credentials, configdata):
+    """ we bind the secret file to a token file """
+    dict_credential =  {'token': credentials.token,
+                        'refresh_token': credentials.refresh_token,
+                        'token_uri': credentials.token_uri,
+                        'client_id': credentials.client_id,
+                        'client_secret': credentials.client_secret,
+                        'scopes': credentials.scopes}
+    client_sfile = configdata.get("CLIENT_SECRETS_FILE", "")
+    k = configdata.get('AUTH_TOKEN_KEY', "")
+    if client_secret_file != "" and k != "":
+        out_file = os.path.splitext(client_sfile)[0] + ".token"
+        configdata.set(k, base64.encodestring(bytes(out_file,'utf-8')))
+        with open(out_file, 'w') as file:
+            file.write(json.dumps(dict_credential))
+    else:
+        configdata.set(k, base64.encodestring(bytes('','utf-8')))
+
+
+def load_token():
+    k = configdata.get('AUTH_TOKEN_KEY', "")
+    if k != "":
+        out_file = configdata.get(k)
+        with open(out_file, 'r') as file:
+            dict_credential = json.load(file))
+        return dict_credential
+    return dict()
 
 def build_credentials(option):
     if not is_logged_in():

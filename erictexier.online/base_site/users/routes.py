@@ -117,7 +117,8 @@ def reset_request():
     form = RequestResetForm()
     if form.validate_on_submit():
         user = User.query.filter_by(email=form.email.data).first()
-        send_reset_email(user)
+        sender = app.config.get("MAIL_USERNAME")
+        send_reset_email(user, sender)
         flask.flash('An email has been sent with instructions "\
             "to reset your password', 'info')
         return flask.redirect(flask.url_for('users.login'))

@@ -2,6 +2,7 @@
 
 from flask import Flask
 from flask_sqlalchemy import SQLAlchemy
+from flask_dance.consumer.storage.sqla import OAuthConsumerMixin
 from flask_bcrypt import Bcrypt
 from flask_login import LoginManager
 from flask_mail import Mail
@@ -24,7 +25,8 @@ logdict = {
         'level': 'INFO',
         'handlers': ['wsgi']
     }
-    }
+}
+
 logging.config.dictConfig(logdict)
 logging.getLogger('googleapicliet.discovery_cache').setLevel(logging.ERROR)
 
@@ -50,17 +52,14 @@ def create_app(config_class=Config):
     from base_site.fillit.routes import fillit
     from base_site.carousel.routes import carousel
     from base_site.errors.handlers import errors
-
-    from base_site.google_api.routes import google_api
-    from base_site.drive_api.readonly_drive import drive_api
+    from base_site.google_auth.routes import google_service
 
     app.register_blueprint(users)
     app.register_blueprint(posts)
     app.register_blueprint(main)
     app.register_blueprint(fillit)
     app.register_blueprint(carousel)
-    app.register_blueprint(google_api)
-    app.register_blueprint(drive_api)
+    app.register_blueprint(google_service)
     app.register_blueprint(errors)
     app.logger.info("%s created" % __name__)
     return app

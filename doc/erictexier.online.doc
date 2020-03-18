@@ -19,7 +19,7 @@ TO do:
  implement esn_update_soft to install change 
 
 From repo in ~/workspace to /var/www
-/opt/esn/www/tetrimino/3.7.6$ sudo /home/eric/miniconda3/bin/conda create -p /opt/esn/www/tetrimino/3.7.6/env  --clone xaosenv
+/opt/esn/www/tetrimino/3.7.6
+$ sudo /home/eric/miniconda3/bin/conda create -p /opt/esn/www/tetrimino/3.7.6/env  --clone xaosenv
 -- go and build fillit
-
-cp works/opt/esn/www/tetrimino/3.7.6/erictexier.online/
+-- pip install pyyaml
