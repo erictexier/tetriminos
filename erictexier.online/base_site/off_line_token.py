@@ -1,6 +1,7 @@
+
+# https://oauth2client.readthedocs.io/en/latest/source/oauth2client.client.html
 import logging
 from oauth2client.client import flow_from_clientsecrets
-from google_auth_oauthlib import flow
 from oauth2client.client import FlowExchangeError
 from apiclient.discovery import build
 # ...
@@ -16,7 +17,7 @@ from apiclient.discovery import build
 #       "token_uri": "https://accounts.google.com/o/oauth2/token"
 #     }
 #   }
-CLIENTSECRETS_LOCATION = '/Users/eric/workspace/quickstart/erictexier-online-1e24e8177fd0.json'
+CLIENTSECRETS_LOCATION = '/Users/eric/workspace/quickstart/eric7fd0.json'
 REDIRECT_URI = '<YOUR_REGISTERED_REDIRECT_URI>'
 SCOPES = [
     'https://www.googleapis.com/auth/gmail.readonly',
@@ -25,12 +26,13 @@ SCOPES = [
     # Add other requested scopes.
 ]
 
+
 class GetCredentialsException(Exception):
     """Error raised when an error occurred while retrieving credentials.
 
-    Attributes:
-        authorization_url: Authorization URL to redirect the user to in order to
-                        request offline access.
+        Attributes:
+         authorization_url: Authorization URL to redirect the user to in
+                           order to request offline access.
     """
 
     def __init__(self, authorization_url):
@@ -38,20 +40,20 @@ class GetCredentialsException(Exception):
         self.authorization_url = authorization_url
 
 
-    class CodeExchangeException(GetCredentialsException):
-        """Error raised when a code exchange has failed."""
+class CodeExchangeException(GetCredentialsException):
+    """Error raised when a code exchange has failed."""
 
 
-    class NoRefreshTokenException(GetCredentialsException):
-        """Error raised when no refresh token has been found."""
+class NoRefreshTokenException(GetCredentialsException):
+    """Error raised when no refresh token has been found."""
 
 
-    class NoUserIdException(Exception):
-        """Error raised when no user ID could be retrieved."""
+class NoUserIdException(Exception):
+    """Error raised when no user ID could be retrieved."""
 
 
 def get_stored_credentials(user_id):
-        """Retrieved stored credentials for the provided user ID.
+    """Retrieved stored credentials for the provided user ID.
 
     Args:
         user_id: User's ID.
@@ -61,17 +63,17 @@ def get_stored_credentials(user_id):
         NotImplemented: This function has not been implemented.
     """
     # TODO: Implement this function to work with your database.
-    #       To instantiate an OAuth2Credentials instance from a Json
-    #       representation, use the oauth2client.client.Credentials.new_from_json
-    #       class method.
+    #   To instantiate an OAuth2Credentials instance from a Json
+    #   representation, use the oauth2client.client.Credentials.new_from_json
+    #   class method.
     raise NotImplementedError()
 
 
 def store_credentials(user_id, credentials):
     """Store OAuth 2.0 credentials in the application's database.
 
-    This function stores the provided OAuth 2.0 credentials using the user ID as
-    key.
+    This function stores the provided OAuth 2.0 credentials using the user ID
+    as key.
 
     Args:
         user_id: User's ID.
@@ -80,8 +82,8 @@ def store_credentials(user_id, credentials):
         NotImplemented: This function has not been implemented.
     """
     # TODO: Implement this function to work with your database.
-    #       To retrieve a Json representation of the credentials instance, call the
-    #       credentials.to_json() method.
+    #  To retrieve a Json representation of the credentials instance, call the
+    #  credentials.to_json() method.
     raise NotImplementedError()
 
 
@@ -110,8 +112,8 @@ def get_user_info(credentials):
     """Send a request to the UserInfo API to retrieve the user's information.
 
     Args:
-        credentials: oauth2client.client.OAuth2Credentials instance to authorize the
-                    request.
+        credentials: oauth2client.client.OAuth2Credentials instance
+                     to authorize the request.
     Returns:
         User information as a dict.
     """
@@ -149,16 +151,16 @@ def get_authorization_url(email_address, state):
 def get_credentials(authorization_code, state):
     """Retrieve credentials using the provided authorization code.
 
-    This function exchanges the authorization code for an access token and queries
-    the UserInfo API to retrieve the user's e-mail address.
-    If a refresh token has been retrieved along with an access token, it is stored
-    in the application database using the user's e-mail address as key.
-    If no refresh token has been retrieved, the function checks in the application
-    database for one and returns it if found or raises a NoRefreshTokenException
-    with the authorization URL to redirect the user to.
+    This function exchanges the authorization code for an access token and
+    queries the UserInfo API to retrieve the user's e-mail address.
+    If a refresh token has been retrieved along with an access token, it is
+    stored in the application database using the user's e-mail address as key.
+    If no refresh token has been retrieved, the function checks in the
+    application database for one and returns it if found or raises a
+    NoRefreshTokenException with the authorization URL to redirect the user to.
 
     Args:
-        authorization_code: Authorization code to use to retrieve an access token.
+        authorization_code: Authorization code use to retrieve an access token.
         state: State to set to the authorization URL in case of error.
     Returns:
         oauth2client.client.OAuth2Credentials instance containing an access and
@@ -175,16 +177,16 @@ def get_credentials(authorization_code, state):
         email_address = user_info.get('email')
         user_id = user_info.get('id')
         if credentials.refresh_token is not None:
-        store_credentials(user_id, credentials)
-        return credentials
+            store_credentials(user_id, credentials)
+            return credentials
         else:
-        credentials = get_stored_credentials(user_id)
+            credentials = get_stored_credentials(user_id)
         if credentials and credentials.refresh_token is not None:
             return credentials
     except CodeExchangeException, error:
         logging.error('An error occurred during code exchange.')
-        # Drive apps should try to retrieve the user and credentials for the current
-        # session.
+        # Drive apps should try to retrieve the user and credentials for the
+        # current session.
         # If none is available, redirect the user to the authorization URL.
         error.authorization_url = get_authorization_url(email_address, state)
         raise error

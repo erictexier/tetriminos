@@ -12,7 +12,6 @@ from base_site.google_auth import download_utils
 google_service = Blueprint('google_service', __name__)
 
 
-
 @google_service.route('/google_service')
 def route_drive_index():
     return print_index_table()
@@ -28,9 +27,9 @@ def test_api_request():
     # drive example
     drive_service = GoogleServices.get_drive_service(credentials)
 
-    #files = drive_service.files().list().execute()
+    # files = drive_service.files().list().execute()
 
-    """
+
     # email example
     mails = GoogleServices.get_gmail_service(credentials)
     data = mail_utils.create_message(
@@ -39,36 +38,47 @@ def test_api_request():
                         "bonjour de bonjour", "Rien a dire")
 
     msg = mail_utils.send_message(mails, "me", data)
+    """
     results = mails.users().labels().list(userId="me").execute()
     """
     # Call the Drive v3 API
     results = drive_service.files().list(
-        pageSize=20,
+        q="name='about'",
+        # pageSize=20,
         corpora='user',
         # fields="nextPageToken, files(id, name, fullFileExtension, parents)"
-        fields="nextPageToken, files(id, name, fullFileExtension, parents)"
+        fields="files(id, name, fullFileExtension)"
         ).execute()
     items = results.get('files', [])
-
+    out_file = ""
     if not items:
         print('No files found.')
     else:
         print('Files:')
         for item in items:
-            print(item)
-            print(u'{0} ({1})'.format(item['name'], item['id']))
+            if item['name'] == 'about':
+                out_file = os.path.join(app.root_path, 
+                                        app.static_url_path[1:],
+                                        'temp', 'about.rtf')
+                download_utils.download_doc_file(
+                        drive_service, item['id'], out_file)
+                print(u'{0} ({1})'.format(item['name'], item['id']))
 
-    #download_utils.download_pdf_file(drive_service,
+    # download_utils.download_pdf_file(drive_service,
     #                                 "17YRREojmS0av2wA_Qk9mJ2P6KUqj")
-    download_utils.download_doc_file(drive_service,"1iLBpefz4c6bB_Zf7ug6tN5GAIOxba11GdoPfJtoHJ5g")
+    ''' download_utils.download_doc_file(
+                        drive_service,
+                        "1iLBpefz4c6bB_Zf7ug6tN5GAIOxba11GdoPfJtoHJ5g",
+                        output_file = "/Users/eric/workspace/quickstart/resume.gdoc")
+    '''
     GoogleServices.credentials_to_file(app.config, credentials)
-    return "DONE"
-    # return flask.jsonify(**files)
+    return '<h3> file: ' + out_file + '</h3>'
+    #  return flask.jsonify(**files)
 
 
 @google_service.route('/google_service/authorize')
 def authorize():
-    # Create flow instance 
+    # Create flow instance
     flow = GoogleServices.init_flow_authorize(app.config)
     # The URI created here must exactly match one of the authorized redirect
     # URIs for the OAuth 2.0 client, which you configured in the API Console.
@@ -95,10 +105,10 @@ def authorize():
 def oauth2callback():
     # Specify the state when creating the flow in the callback so that it can
     # verified in the authorization server response.
-    
+
     flow = GoogleServices.init_flow_authorize(
                                            app.config,
-                                           state = flask.session['state'])
+                                           state=flask.session['state'])
     flow.redirect_uri = flask.url_for('google_service.oauth2callback',
                                       _external=True)
     # Use the authorization server's response to fetch the OAuth 2.0 tokens.
@@ -113,8 +123,9 @@ def oauth2callback():
 def revoke():
 
     if GoogleServices.is_token_exist(app.config) is False:
-        return('You need to <a href="/google_service/authorize">authorize</a>' +
-                'before testing the code to revoke credentials.')
+        return(
+            'You need to <a href="/google_service/authorize">authorize</a>' +
+            'before testing the code to revoke credentials.')
 
     token = GoogleServices.load_token(app.config)
     credentials = GoogleServices.get_credentials(**token)
@@ -137,24 +148,30 @@ def clear_credentials():
     return ('Credentials have been cleared.<br><br>' +
             print_index_table())
 
+
 def print_index_table():
     return (
         '<table>' +
-        '<tr><td><a href="/google_service/test_api_request">Test an API request</a></td>' +
+        '<tr><td><a href="/google_service/test_api_request">Test' +
+        'API request</a></td>' +
         '<td>Submit an API request and see a formatted JSON response. ' +
         '    Go through the authorization flow if there are no stored ' +
         '    credentials for the user.</td></tr>' +
-        '<tr><td><a href="/google_service/authorize">Test the auth flow directly</a></td>' +
+        '<tr><td><a href="/google_service/authorize">Test the auth '
+        'flow directly</a></td>' +
         '<td>Go directly to the authorization flow. If there are stored ' +
         '    credentials, you still might not be prompted to reauthorize ' +
         '    the application.</td></tr>' +
-        '<tr><td><a href="/google_service/revoke">Revoke current credentials</a></td>' +
+        '<tr><td><a href="/google_service/revoke">'
+        'Revoke current credentials</a></td>' +
         '<td>Revoke the access token associated with the current user ' +
         '    session. After revoking credentials, if you go to the test ' +
         '    page, you should see an <code>invalid_grant</code> error.' +
         '</td></tr>' +
-        '<tr><td><a href="/google_service/clear">Clear Flask session credentials</a></td>' +
+        '<tr><td><a href="/google_service/clear">'
+        'Clear Flask session credentials</a></td>' +
         '<td>Clear the access token currently stored in the user session. ' +
-        '    After clearing the token, if you <a href="/google_service/test_api_request">test the ' +
-        '    API request</a> again, you should go back to the auth flow.' +
+        '    After clearing the token, if you '
+        '<a href="/google_service/test_api_request">test the ' +
+        'API request</a> again, you should go back to the auth flow.' +
         '</td></tr></table>')

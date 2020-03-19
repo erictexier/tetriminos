@@ -39,7 +39,7 @@ class GoogleServices(object):
     def unset_token(configdata):
         k = configdata.get('AUTH_TOKEN_KEY', "")
         if k and k in configdata:
-            configdata.update({ k: ""})
+            configdata.update({k: ""})
 
     @staticmethod
     def get_credentials(**token):
@@ -61,7 +61,6 @@ class GoogleServices(object):
                                         cache_discovery=False,
                                         credentials=credentials)
 
-
     @staticmethod
     def init_flow_authorize(configdata, state=None):
         # Create flow instance to manage the OAuth 2.0 Authorization
@@ -78,17 +77,19 @@ class GoogleServices(object):
         return google_auth_oauthlib.flow.Flow.from_client_secrets_file(
                                                 client_sfile,
                                                 scopes=scopes,
-                                                state = state)
+                                                state=state)
 
     @staticmethod
     def credentials_to_file(configdata, credentials):
         """ we bind the secret file to a token file """
-        dict_credential =  {'token': credentials.token,
+        dict_credential = {
+                            'token': credentials.token,
                             'refresh_token': credentials.refresh_token,
                             'token_uri': credentials.token_uri,
                             'client_id': credentials.client_id,
                             'client_secret': credentials.client_secret,
-                            'scopes': credentials.scopes}
+                            'scopes': credentials.scopes
+                        }
         client_sfile = configdata.get("CLIENT_SECRETS_FILE", "")
         k = configdata.get('AUTH_TOKEN_KEY', "")
         if client_sfile != "":

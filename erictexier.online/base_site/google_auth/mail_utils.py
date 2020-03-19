@@ -9,6 +9,7 @@ from email.mime.base import MIMEBase
 from email.mime.multipart import MIMEMultipart
 import mimetypes
 
+
 def send_message(service, user_id, message):
     """ Send an email message.
 
@@ -25,7 +26,7 @@ def send_message(service, user_id, message):
         message = (service.users().messages().send(
                                 userId=user_id,
                                 body=message).execute())
-        print('Message Id: %s' % message['id'])
+        # print('Message Id: %s' % message['id'])
         return message
     except urllib.error.HTTPError as error:
         print('An error occurred: {}'.format(error))
