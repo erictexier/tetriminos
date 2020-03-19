@@ -52,3 +52,10 @@
         "activityBar.background": "#b0c4c4",
     }
 }
+
+
+"https://www.googleapis.com/auth/drive.file"
+openid
+https://mail.google.com/
+https://www.googleapis.com/auth/userinfo.profile
+https://www.googleapis.com/auth/userinfo.email"

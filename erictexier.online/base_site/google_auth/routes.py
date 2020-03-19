@@ -8,8 +8,9 @@ import requests
 
 from base_site.google_auth.googleservices import GoogleServices
 from base_site.google_auth import mail_utils
-
+from base_site.google_auth import download_utils
 google_service = Blueprint('google_service', __name__)
+
 
 
 @google_service.route('/google_service')
@@ -25,9 +26,11 @@ def test_api_request():
         return flask.redirect(flask.url_for('google_service.authorize'))
     credentials = GoogleServices.get_credentials(**creds)
     # drive example
-    drive = GoogleServices.get_drive_service(credentials)
-    files = drive.files().list().execute()
+    drive_service = GoogleServices.get_drive_service(credentials)
 
+    #files = drive_service.files().list().execute()
+
+    """
     # email example
     mails = GoogleServices.get_gmail_service(credentials)
     data = mail_utils.create_message(
@@ -37,9 +40,30 @@ def test_api_request():
 
     msg = mail_utils.send_message(mails, "me", data)
     results = mails.users().labels().list(userId="me").execute()
-    GoogleServices.credentials_to_file(app.config, credentials)
+    """
+    # Call the Drive v3 API
+    results = drive_service.files().list(
+        pageSize=20,
+        corpora='user',
+        # fields="nextPageToken, files(id, name, fullFileExtension, parents)"
+        fields="nextPageToken, files(id, name, fullFileExtension, parents)"
+        ).execute()
+    items = results.get('files', [])
 
-    return flask.jsonify(**results)
+    if not items:
+        print('No files found.')
+    else:
+        print('Files:')
+        for item in items:
+            print(item)
+            print(u'{0} ({1})'.format(item['name'], item['id']))
+
+    #download_utils.download_pdf_file(drive_service,
+    #                                 "17YRREojmS0av2wA_Qk9mJ2P6KUqj")
+    download_utils.download_doc_file(drive_service,"1iLBpefz4c6bB_Zf7ug6tN5GAIOxba11GdoPfJtoHJ5g")
+    GoogleServices.credentials_to_file(app.config, credentials)
+    return "DONE"
+    # return flask.jsonify(**files)
 
 
 @google_service.route('/google_service/authorize')
