@@ -1,3 +1,5 @@
+# -*- coding: utf-8 -*-
+
 import flask
 
 carousel = flask.Blueprint('carousel', __name__)

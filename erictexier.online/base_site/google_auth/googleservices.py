@@ -9,7 +9,7 @@ import json
 import google.oauth2.credentials
 import googleapiclient.discovery
 import google_auth_oauthlib.flow
-
+# from httplib2 import Http
 
 class GoogleServices(object):
     API_SERVICE_NAME_DRIVE = 'drive'
@@ -21,25 +21,25 @@ class GoogleServices(object):
 
     @staticmethod
     def get_token_in(configdata):
-        k = configdata.get('AUTH_TOKEN_KEY', "")
-        if k and k in configdata:
-            return configdata.get(k)
+        auth_key = configdata.get('AUTH_TOKEN_KEY', "")
+        if auth_key and auth_key in configdata:
+            return configdata.get(auth_key)
         return None
 
     @staticmethod
     def is_token_exist(configdata):
-        k = configdata.get('AUTH_TOKEN_KEY', "")
-        if k and k in configdata:
-            path = configdata.get(k)
+        auth_key = configdata.get('AUTH_TOKEN_KEY', "")
+        if auth_key and auth_key in configdata:
+            path = configdata.get(auth_key)
             if os.path.exists(path):
                 return True
         return False
 
     @staticmethod
     def unset_token(configdata):
-        k = configdata.get('AUTH_TOKEN_KEY', "")
-        if k and k in configdata:
-            configdata.update({k: ""})
+        auth_key = configdata.get('AUTH_TOKEN_KEY', "")
+        if auth_key and auth_key in configdata:
+            configdata.update({auth_key: ""})
 
     @staticmethod
     def get_credentials(**token):
@@ -91,16 +91,16 @@ class GoogleServices(object):
                             'scopes': credentials.scopes
                         }
         client_sfile = configdata.get("CLIENT_SECRETS_FILE", "")
-        k = configdata.get('AUTH_TOKEN_KEY', "")
+        auth_key = configdata.get('AUTH_TOKEN_KEY', "")
         if client_sfile != "":
             out_file = os.path.splitext(client_sfile)[0] + ".token"
             with open(out_file, 'w') as file:
                 file.write(json.dumps(dict_credential))
-        if k:
+        if auth_key:
             if os.path.exists(out_file):
-                configdata.update({k: out_file})
+                configdata.update({auth_key: out_file})
             else:
-                configdata.update({k: ""})
+                configdata.update({auth_key: ""})
 
     @staticmethod
     def load_token(configdata):

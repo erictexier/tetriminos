@@ -1,3 +1,5 @@
+# -*- coding: utf-8 -*-
+
 import sys
 from base_site import create_app
 app = create_app()

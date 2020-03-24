@@ -27,8 +27,13 @@ conda install -y pillow
 
 conda install -y -c conda-forge authlib
 conda install -y google-api-python-client google-auth-httplib2 google-auth-oauthlib
-# for command line
-conda install flash-dance
+
+# for some testing but no working on server
+# + on server flask-admin flask-security 
+conda install -y -c conda-forge flash-dance
+
+
+
 conda install -y -c conda-forge oauth2client
 conda install -y numpy
 conda install -y -c conda-forge google-cloud-sdk

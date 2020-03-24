@@ -2,9 +2,9 @@ import os
 import secrets
 from PIL import Image
 from flask import url_for, current_app
-from flask_mail import Message
-from base_site import mail
 
+from sendgrid import SendGridAPIClient
+from sendgrid.helpers.mail import Mail
 
 def save_picture(form_picture):
     random_hex = secrets.token_hex(8)
@@ -21,7 +21,11 @@ def save_picture(form_picture):
     return picture_fn
 
 
-def send_reset_email(user, sender):
+def send_reset_email_smpt(user, sender):
+    from flask_mail import Message
+    from base_site import mail
+
+
     token = user.get_reset_token()
     msg = Message('Password Reset Request',
                   sender=sender,
@@ -33,3 +37,30 @@ If you didn't make this request then simply ignore
 this email and no changes will be made
 '''
     mail.send(msg)
+
+
+def send_reset_email(user, sender):
+    """ sending email with sendgrid """
+    token = user.get_reset_token()
+    content = list()
+    content.append("<strong>To reset your password, visit the following link: ")
+    content.append(f"{url_for('users.reset_token',token={},_external=True)}")
+    content.append("")
+    content.append("If you didn't make this request then simply ignore")
+    content.append("this email and no changes will be made</strong>")
+    message = Mail(
+        from_email=sender,
+        to_emails=user.email,
+        subject='Password Reset Request',
+        html_content= "\n".join(content)
+    )
+    try:
+        sg = SendGridAPIClient(os.environ.get('SENDGRID_API_KEY'))
+        response = sg.send(message)
+        print(response.status_code)
+        print(response.body)
+        print(response.headers)
+        return response
+    except Exception as e:
+        print(e.message)
+    return ''

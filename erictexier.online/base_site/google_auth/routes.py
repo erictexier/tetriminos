@@ -45,7 +45,7 @@ def test_api_request():
     results = drive_service.files().list(
         q="name='about'",
         # pageSize=20,
-        corpora='user',
+        corpora='domain',
         # fields="nextPageToken, files(id, name, fullFileExtension, parents)"
         fields="files(id, name, fullFileExtension)"
         ).execute()
@@ -55,11 +55,13 @@ def test_api_request():
         print('No files found.')
     else:
         print('Files:')
-        for item in items:
+        out_files = []
+        for i, item in enumerate(items):
             if item['name'] == 'about':
                 out_file = os.path.join(app.root_path, 
                                         app.static_url_path[1:],
-                                        'temp', 'about.rtf')
+                                        'temp', 'about%d.rtf' % i)
+                out_files.append(out_file)
                 download_utils.download_doc_file(
                         drive_service, item['id'], out_file)
                 print(u'{0} ({1})'.format(item['name'], item['id']))
@@ -72,7 +74,7 @@ def test_api_request():
                         output_file = "/Users/eric/workspace/quickstart/resume.gdoc")
     '''
     GoogleServices.credentials_to_file(app.config, credentials)
-    return '<h3> file: ' + out_file + '</h3>'
+    return '<h3> file: ' + '</br>'.join(out_files) + '</h3>'
     #  return flask.jsonify(**files)
 
 
