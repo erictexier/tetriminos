@@ -3,8 +3,6 @@ import secrets
 from PIL import Image
 from flask import url_for, current_app
 
-from sendgrid import SendGridAPIClient
-from sendgrid.helpers.mail import Mail
 
 def save_picture(form_picture):
     random_hex = secrets.token_hex(8)
@@ -21,10 +19,9 @@ def save_picture(form_picture):
     return picture_fn
 
 
-def send_reset_email_smpt(user, sender):
+def send_reset_email_smpt(user, sender, configdict=None):
     from flask_mail import Message
     from base_site import mail
-
 
     token = user.get_reset_token()
     msg = Message('Password Reset Request',
@@ -39,11 +36,14 @@ this email and no changes will be made
     mail.send(msg)
 
 
-def send_reset_email(user, sender):
+def send_reset_email(user, sender, configdict):
     """ sending email with sendgrid """
+    from sendgrid import SendGridAPIClient
+    from sendgrid.helpers.mail import Mail
+
     token = user.get_reset_token()
     content = list()
-    content.append("<strong>To reset your password, visit the following link: ")
+    content.append("<strong>To reset your password, visit the link: ")
     content.append(f"{url_for('users.reset_token',token={},_external=True)}")
     content.append("")
     content.append("If you didn't make this request then simply ignore")
@@ -55,7 +55,7 @@ def send_reset_email(user, sender):
         html_content= "\n".join(content)
     )
     try:
-        sg = SendGridAPIClient(os.environ.get('SENDGRID_API_KEY'))
+        sg = SendGridAPIClient(configdict.get('SENDGRID_API_KEY'))
         response = sg.send(message)
         print(response.status_code)
         print(response.body)

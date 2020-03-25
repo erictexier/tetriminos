@@ -1,5 +1,10 @@
+
 conda config --add channels conda-forge
 conda config --set channel_priority strict
+
+
+# for root:
+sudo chown -R $USER /opt....$version....
 
 conda install -y flask
 # not working: conda install -y yaml
@@ -30,7 +35,7 @@ conda install -y google-api-python-client google-auth-httplib2 google-auth-oauth
 
 # for some testing but no working on server
 # + on server flask-admin flask-security 
-conda install -y -c conda-forge flash-dance
+conda install -y -c conda-forge flask-dance
 
 
 
