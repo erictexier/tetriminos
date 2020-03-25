@@ -19,7 +19,7 @@ def save_picture(form_picture):
     return picture_fn
 
 
-def send_reset_email_smpt(user, sender, configdict=None):
+def send_reset_email(user, sender, configdict=None):
     from flask_mail import Message
     from base_site import mail
 
@@ -27,7 +27,8 @@ def send_reset_email_smpt(user, sender, configdict=None):
     msg = Message('Password Reset Request',
                   sender=sender,
                   recipients=[user.email])
-    msg.body = f''' To reset your password, visit the following link: "\
+    msg.body = f''' To reset your password, visit the following link:
+
 {url_for('users.reset_token',token=token,_external=True)}
 
 If you didn't make this request then simply ignore
@@ -36,7 +37,7 @@ this email and no changes will be made
     mail.send(msg)
 
 
-def send_reset_email(user, sender, configdict):
+def send_reset_email_not_working_for_now(user, sender, configdict):
     """ sending email with sendgrid """
     from sendgrid import SendGridAPIClient
     from sendgrid.helpers.mail import Mail
@@ -62,5 +63,5 @@ def send_reset_email(user, sender, configdict):
         print(response.headers)
         return response
     except Exception as e:
-        print(e.message)
+        print(e)
     return ''

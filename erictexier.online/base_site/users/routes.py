@@ -130,7 +130,7 @@ def reset_request():
 
 
 @users.route("/reset_password/<token>", methods=['GET', 'POST'])
-def reset_token():
+def reset_token(token):
     if flask_login.current_user.is_authenticated:
         return flask.redirect(flask.url_for('main.home'))
     user = User.verify_reset_token(token)
