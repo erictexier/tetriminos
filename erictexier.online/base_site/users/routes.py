@@ -121,8 +121,8 @@ def reset_request():
         app.logger.info("Sending email from %s to %s" % (sender,
                                                          user.email))
         send_reset_email(user, sender, app.config)
-        flask.flash('An email has been sent with instructions "\
-            "to reset your password', 'info')
+        flask.flash('An email has been sent with instructions'\
+                    ' to reset your password', 'info')
         return flask.redirect(flask.url_for('users.login'))
     return flask.render_template('users/reset_request.html',
                                  title='Reset Password',
@@ -143,8 +143,8 @@ def reset_token(token):
                                 form.password.data).decode('utf-8')
         user.password = hashed_password
         db.session.commit()
-        flask.flash('Your password has been updated!" \
-            " You are now able to log in', 'success')
+        flask.flash('Your password has been updated!'\
+                    ' You are now able to log in', 'success')
         return flask.redirect(flask.url_for('users.login'))
 
     return flask.render_template('users/reset_token.html',
