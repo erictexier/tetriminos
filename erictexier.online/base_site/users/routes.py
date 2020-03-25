@@ -135,7 +135,7 @@ def reset_token(token):
         return flask.redirect(flask.url_for('main.home'))
     user = User.verify_reset_token(token)
     if user is None:
-        flash('That is an invalid or expired token', 'warning')
+        flask.flash('That is an invalid or expired token', 'warning')
         return flask.redirect(flask.url_for('users.reset_request'))
     form = ResetPasswordForm()
     if form.validate_on_submit():
