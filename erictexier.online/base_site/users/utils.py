@@ -27,13 +27,6 @@ def send_reset_email(user, sender, configdict=None):
     msg = Message('Password Reset Request',
                   sender=sender,
                   recipients=[user.email])
-    content = list()
-    content.append("To reset your password, visit the link:")
-    content.append(f'{url_for("users.reset_token",token={},_external=True)}')
-    content.append("")
-    content.append("If you didn't make this request then simply ignore")
-    content.append("this email and no changes will be made</strong>")
-    msg.body = "\n".join(content)
     """
     msg.body = f''' To reset your password, visit the following link:
 
