@@ -52,7 +52,7 @@ def login():
             next_page = flask.request.args.get('next')
             if next_page:
                 return flask.redirect(next_page)
-            flask.redirect(flask.url_for('main.home'))
+            return flask.redirect(flask.url_for('main.home'))
         else:
             flask.flash('Login unsuccessful," \
                 " Please check your email and password!', 'danger')

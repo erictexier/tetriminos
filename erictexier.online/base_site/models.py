@@ -26,6 +26,8 @@ class User(db.Model, UserMixin):
                             backref='author',
                             primaryjoin="User.id == Post.user_id",
                             lazy='dynamic')
+    # active = db.Column(db.Boolean)
+    # confirmed_at = db.Column(db.DateTime)
 
     def get_reset_token(self, expires_sec=1800):
         s = Serializer(current_app.config['SECRET_KEY'], expires_sec)
@@ -43,7 +45,19 @@ class User(db.Model, UserMixin):
     def __repr__(self):
         return f"User('{self.username}', '{self.email}', '{self.image_file}')"
 
+
 """
+roles_users = db.Table(
+                'roles_user',
+                db.Column('user_id', db.Integer, db.ForeignKey('user_id')),
+                db.Column('role_id', db.Integer, db.ForeignKey('role_id')))
+
+class Role(db.Model):
+    id = db.column(db.Integer, primary_key=True)
+    name = db.Column(db.String(40))
+    description = db.Column(db.String(255))
+
+
 class OAuth(db.Model, OAuthConsumerMixin):
     provider_user_id = db.Column(db.String(256), unique=True)
     user_id = db.Column(db.Integer, db.ForeignKey(User.id))

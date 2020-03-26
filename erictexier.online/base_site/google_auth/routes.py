@@ -47,7 +47,7 @@ def test_api_request():
         # pageSize=20,
         corpora='domain',
         # fields="nextPageToken, files(id, name, fullFileExtension, parents)"
-        fields="files(id, name, fullFileExtension)"
+        fields="files(id, name, owners/emailAddress, fullFileExtension)"
         ).execute()
     items = results.get('files', [])
     out_file = ""
@@ -58,9 +58,15 @@ def test_api_request():
         out_files = []
         for i, item in enumerate(items):
             if item['name'] == 'about':
+                em = item['owners']
+                if len(em) == 1:
+                    em = em[0]['emailAddress'].split("@")[0]
+                else:
+                    em = 'noname'
                 out_file = os.path.join(app.root_path, 
                                         app.static_url_path[1:],
-                                        'temp', 'about%d.rtf' % i)
+                                        'temp', 'about-%s-%d.rtf' % (
+                                            em, i))
                 out_files.append(out_file)
                 download_utils.download_doc_file(
                         drive_service, item['id'], out_file)
