@@ -2,9 +2,15 @@
 {{ super() }}
 {% block body %}
     {% if do_access %}
-        <h1>Hello Drive</h1>
+        <h5>Drive action:</h5>
+        <div class="container">
+            <a class="btn btn-default" href={{ url_for('google_service.test_api_request') }}>Execute Request (No Check)</a>
+            <a class="btn btn-default" href={{ url_for('google_service.authorize') }}>Execute Request</a>
+            <a class="btn btn-warning" href={{ url_for('google_service.revoke') }}>Revoke</a>
+            <a class="btn btn-default" href={{ url_for('google_service.clear_credentials') }}>Clear</a>
+          </div>
     {% else %}
-        <h1>No Project Access</h1>
+        <h3>No Project Access</h3>
     {% endif %}
 
 {% endblock %}

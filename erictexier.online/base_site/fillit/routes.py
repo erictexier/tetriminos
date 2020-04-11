@@ -48,7 +48,7 @@ def fillit_route():
     return flask.redirect(flask.url_for('fillit.fillit_route'))
 
 
-@fillit.route('/fillit_ajax', methods=['POST', 'GET'])
+@fillit.route('/fillit_ajax', methods=['POST'])
 def fillit_ajax():
     form = FillitForm()
     if not form.validate_on_submit():

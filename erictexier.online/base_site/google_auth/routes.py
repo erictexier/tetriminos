@@ -3,58 +3,43 @@
 import os
 import flask
 from flask import Blueprint
+from flask_login import login_required
 from flask import current_app as app
 import requests
 
 from base_site.google_auth.googleservices import GoogleServices
 from base_site.google_auth import mail_utils
 from base_site.google_auth import download_utils
+
 google_service = Blueprint('google_service', __name__)
 
-
 @google_service.route('/google_service')
+@login_required
 def route_drive_index():
     return print_index_table()
 
-
 @google_service.route('/google_service/test_api_request')
+@login_required
 def test_api_request():
 
     creds = GoogleServices.load_token(app.config)
     if creds is None:
         return flask.redirect(flask.url_for('google_service.authorize'))
     credentials = GoogleServices.get_credentials(**creds)
-    # drive example
-    drive_service = GoogleServices.get_drive_service(credentials)
 
-    # files = drive_service.files().list().execute()
-
-
-    # email example
-    mails = GoogleServices.get_gmail_service(credentials)
-    data = mail_utils.create_message(
-                        app.config.get("MAIL_USERNAME"),
-                        "e.texier@icloud.com",
-                        "bonjour de bonjour", "Rien a dire")
-
-    msg = mail_utils.send_message(mails, "me", data)
-    """
-    results = mails.users().labels().list(userId="me").execute()
-    """
     # Call the Drive v3 API
+    drive_service = GoogleServices.get_drive_service(credentials)
     results = drive_service.files().list(
-        q="name='about'",
-        # pageSize=20,
-        corpora='domain',
-        # fields="nextPageToken, files(id, name, fullFileExtension, parents)"
-        fields="files(id, name, owners/emailAddress, fullFileExtension)"
+            q="name='about'",
+            corpora='domain',
+            fields="files(id, name, owners/emailAddress, fullFileExtension)"
         ).execute()
     items = results.get('files', [])
     out_file = ""
     if not items:
-        print('No files found.')
+        flask.flash('Files not found:', 'warning')
+        return flask.redirect('/admin/drivet')
     else:
-        print('Files:')
         out_files = []
         for i, item in enumerate(items):
             if item['name'] == 'about':
@@ -65,26 +50,31 @@ def test_api_request():
                     em = 'noname'
                 out_file = os.path.join(app.root_path, 
                                         app.static_url_path[1:],
-                                        'temp', 'about-%s-%d.rtf' % (
-                                            em, i))
+                                        'temp',
+                                        'about-%s-%d.rtf' % (em, i))
                 out_files.append(out_file)
-                download_utils.download_doc_file(
-                        drive_service, item['id'], out_file)
-                print(u'{0} ({1})'.format(item['name'], item['id']))
+                download_utils.download_doc_file(drive_service,
+                                                 item['id'],
+                                                 out_file)
+    # send email
+    mails = GoogleServices.get_gmail_service(credentials)
+    data = mail_utils.create_message(
+                        app.config.get("MAIL_ADMIN"),
+                        app.config.get("MAIL_ADMIN"),
+                        "Update About", 
+                        "About Page Updated\n" + "\n".join(out_files))
 
-    # download_utils.download_pdf_file(drive_service,
-    #                                 "17YRREojmS0av2wA_Qk9mJ2P6KUqj")
-    ''' download_utils.download_doc_file(
-                        drive_service,
-                        "1iLBpefz4c6bB_Zf7ug6tN5GAIOxba11GdoPfJtoHJ5g",
-                        output_file = "/Users/eric/workspace/quickstart/resume.gdoc")
-    '''
+    msg = mail_utils.send_message(mails, "me", data)
+
     GoogleServices.credentials_to_file(app.config, credentials)
-    return '<h3> file: ' + '</br>'.join(out_files) + '</h3>'
-    #  return flask.jsonify(**files)
 
+    app.logger.info('/n'.join(out_files))
+    flask.flash('Files successfully downloaded: An email has been sent',
+                'success')
+    return flask.redirect('/admin/drivet')
 
 @google_service.route('/google_service/authorize')
+@login_required
 def authorize():
     # Create flow instance
     flow = GoogleServices.init_flow_authorize(app.config)
@@ -110,6 +100,7 @@ def authorize():
 
 
 @google_service.route('/google_service/oauth2callback')
+@login_required
 def oauth2callback():
     # Specify the state when creating the flow in the callback so that it can
     # verified in the authorization server response.
@@ -128,12 +119,12 @@ def oauth2callback():
 
 
 @google_service.route('/google_service/revoke')
+@login_required
 def revoke():
 
     if GoogleServices.is_token_exist(app.config) is False:
-        return(
-            'You need to <a href="/google_service/authorize">authorize</a>' +
-            'before testing the code to revoke credentials.')
+        flask.flash('You need to authorize first', 'info')
+        return flask.redirect('/admin/drivet')
 
     token = GoogleServices.load_token(app.config)
     credentials = GoogleServices.get_credentials(**token)
@@ -145,16 +136,19 @@ def revoke():
 
     status_code = getattr(revoke, 'status_code')
     if status_code == 200:
-        return('Credentials successfully revoked.' + print_index_table())
+        flask.flash('Credentials successfully revoked.', 'success')
     else:
-        return('An error occurred.' + print_index_table())
+        flask.flash('An error occurred: You need to authorize first', 'error')
+
+    return flask.redirect('/admin/drivet')
 
 
 @google_service.route('/google_service/clear')
+@login_required
 def clear_credentials():
     GoogleServices.unset_token(app.config)
-    return ('Credentials have been cleared.<br><br>' +
-            print_index_table())
+    flask.flash('Credentials have been cleared.', 'success')
+    return flask.redirect('/admin/drivet')
 
 
 def print_index_table():

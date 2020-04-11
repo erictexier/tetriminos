@@ -33,6 +33,8 @@ conda install -y pillow
 conda install -y -c conda-forge authlib
 conda install -y google-api-python-client google-auth-httplib2 google-auth-oauthlib
 
+conda install -c conda-forge beaker
+
 # for some testing but no working on server
 # + on server flask-admin flask-security 
 conda install -y -c conda-forge flask-dance

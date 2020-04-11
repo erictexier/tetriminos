@@ -6,8 +6,7 @@ app = create_app()
 
 if __name__ == '__main__':
     import os
-    # context = ('localhost.crt', 'localhost.key')
-    # app.run(debug=True, port=5000, ssl_context=context)
+
     # When running locally, disable OAuthlib's HTTPs verification.
     # ACTION ITEM for developers:
     #     When running in production *do not* leave this option enabled.
@@ -23,5 +22,6 @@ if __name__ == '__main__':
         db.session.commit()
         print("Database tables created")
     else:
+        os.environ['GOOGLE_APPLICATION_CREDENTIALS'] = '/Users/eric/Downloads/erictexier-online-ad29cdcc658b.json'
         os.environ['OAUTHLIB_INSECURE_TRANSPORT'] = '1'
         app.run(debug=True)

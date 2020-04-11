@@ -29,6 +29,7 @@ logdict = {
     }
 }
 
+# this is to avoid unneeded error message from discovery_cache
 logging.config.dictConfig(logdict)
 logging.getLogger('googleapicliet.discovery_cache').setLevel(logging.ERROR)
 
@@ -40,13 +41,18 @@ login_manager.login_message_category = 'info'
 mail = Mail()
 
 # add admin level
-admin = AdminApp(name='Eclectic Studio', template_mode='bootstrap3')
+admin = AdminApp(
+                name='Eclectic Studio',
+                template_mode='bootstrap3')
 
 
 def create_app(config_class=Config):
 
+    # need to figure out how to set the static_url_path depending on host
+
     app = Flask(__name__)
     app.config.from_object(Config)
+
     db.init_app(app)
     bcrypt.init_app(app)
     login_manager.init_app(app)

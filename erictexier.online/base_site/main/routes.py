@@ -21,3 +21,11 @@ def about():
     return flask.render_template("main/about.html",
                                  title='About Page In the work',
                                  contents=alist)
+
+@main.route("/contact")
+def contact():
+    alist = ["To be about what you decided on your personal drive:"]
+    alist.append("Nothing for now :)")
+    return flask.render_template("main/about.html",
+                                 title='About Page In the work',
+                                 contents=alist)
