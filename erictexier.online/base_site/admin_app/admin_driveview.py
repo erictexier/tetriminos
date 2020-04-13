@@ -6,7 +6,6 @@ from flask import current_app as app
 class AdminDriveView(BaseView):
     @expose('/')
     def index(self):
-        print("DOMAIN:",)
         do_access = False
         domain = app.config.get("DOMAIN", "")
         if (current_user.is_authenticated and 

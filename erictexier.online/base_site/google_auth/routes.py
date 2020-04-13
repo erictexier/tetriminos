@@ -4,6 +4,7 @@ import os
 import flask
 from flask import Blueprint
 from flask_login import login_required
+from flask_login import current_user
 from flask import current_app as app
 import requests
 
@@ -60,7 +61,7 @@ def test_api_request():
     mails = GoogleServices.get_gmail_service(credentials)
     data = mail_utils.create_message(
                         app.config.get("MAIL_ADMIN"),
-                        app.config.get("MAIL_ADMIN"),
+                        current_user.email,
                         "Update About", 
                         "About Page Updated\n" + "\n".join(out_files))
 
