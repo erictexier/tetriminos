@@ -15,6 +15,7 @@ migrations
 django/D03/ex00/local_lib/*
 site.db
 build/
+medias/
 fillit/fillit
 Not_to_git.txt
 *code-workspace

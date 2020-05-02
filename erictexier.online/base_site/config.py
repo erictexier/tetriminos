@@ -29,7 +29,9 @@ if len(data) == 0:
         "MAIL_SERVER": "smtp.gmail.com",
         "MAIL_USE_SSL": True,
         "MAIL_USE_TLS": False,
-        "MAIL_PORT": 587
+        "MAIL_PORT": 587,
+        "MEDIA_FOLDER": os.path.join(os.path.dirname(__file__),
+                                     'medias')
         }
 
 
@@ -48,6 +50,10 @@ class Config(object):
         MAIL_USE_TLS = confdata.get('MAIL_USE_TLS', False)
         MAIL_USE_SSL = confdata.get('MAIL_USE_SSL', False)
         MAIL_PORT = confdata.get('MAIL_PORT')
+        MEDIA_FOLDER = confdata.get('MEDIA_FOLDER',
+                                    os.path.join(
+                                            os.path.dirname(__file__),
+                                            'medias'))
         if "POSTGRES_USER" in confdata:
             SQLALCHEMY_DATABASE_URI = \
                 'postgresql://{user}:{pw}@{url}:{pt}/{db}'.format(

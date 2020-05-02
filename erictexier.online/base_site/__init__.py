@@ -9,7 +9,6 @@ from flask_mail import Mail
 from base_site.config import Config
 from base_site.admin_app.adminapp import AdminApp
 
-
 import logging
 from logging.config import dictConfig
 
@@ -59,20 +58,23 @@ def create_app(config_class=Config):
     mail.init_app(app)
     admin.init_app(app)
 
-    from base_site.users.routes import users
-    from base_site.posts.routes import posts
-    from base_site.main.routes import main
-    from base_site.fillit.routes import fillit
-    from base_site.carousel.routes import carousel
-    from base_site.errors.handlers import errors
-    from base_site.google_auth.routes import google_service
+    with app.app_context():
 
-    app.register_blueprint(users)
-    app.register_blueprint(posts)
-    app.register_blueprint(main)
-    app.register_blueprint(fillit)
-    app.register_blueprint(carousel)
-    app.register_blueprint(google_service)
-    app.register_blueprint(errors)
-    app.logger.info("%s created" % __name__)
-    return app
+        from base_site.users.routes import users
+        from base_site.posts.routes import posts
+        from base_site.main.routes import main
+        from base_site.fillit.routes import fillit
+        from base_site.carousel.routes import carousel
+        from base_site.errors.handlers import errors
+        from base_site.google_auth.routes import google_service
+
+        app.register_blueprint(users)
+        app.register_blueprint(posts)
+        app.register_blueprint(main)
+        app.register_blueprint(fillit)
+        app.register_blueprint(carousel)
+        app.register_blueprint(google_service)
+        app.register_blueprint(errors)
+        app.logger.info("%s created, MEDIA_FOLDER %s" % (
+            __name__, app.config['MEDIA_FOLDER']))
+        return app
