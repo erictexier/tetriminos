@@ -28,3 +28,5 @@ class TblDisplay(dict):
         
         if 'date' in self:
             self['date'] = self['date'].split(" ")[0]
+        
+        self['tags'] = [x.strip() for x in self['tags'] if x.strip() != ""]

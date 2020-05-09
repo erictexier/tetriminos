@@ -6,17 +6,50 @@
 
               <div id="carouselExampleSlidesOnly" class="carousel slide" data-ride="carousel">
                   <div class="carousel-inner">
-                            <div class="carousel-item active">
-                                  <div class="row">
+                      <div class="carousel-item active">
+                            <div class="row">
                                         <div class="col">
                                                 <img class="img-responsive"  height="400px"  alt="" src="{{ image.pic_url }}">
                                         </div>
-                                        <div class="col">
-                                                 <p class="article-content"> {{ image.blog_name }} </p>
-                                                 {% for tag in image['tags'] %}
-                                                    <p class="article-content"> {{ tag }} </p>
-                                                 {% endfor %}
-                                        </div>  <!-- end second column -->
+                                        <div class="col main-jacket">
+
+                                          <dl class="row row-jacket">
+                                            <dt class="col-4 jacket">Blog Name:</dt>
+                                            <dd class="col-8 jacket"> {{ image.blog_name }} </dd>
+                                          </dl>
+
+                                          {% if image.caption %}
+                                          <dl class="row row-jacket">
+                                            <dt class="col-4 jacket">Title:</dt>
+                                            <dd class="col-8 jacket"> {{ image.caption }} </dd>
+                                          </dl>
+                                          {% endif %}
+
+                                          <dl class="row">
+                                            <dt class="col-4 jacket">Tags:</dt>
+                                            <dd class="col-8 jacket">
+                                                  <ul class="list-unstyled">
+                                                      {% for tag in image['tags'] %}
+                                                          {% if tag|length %}
+                                                            <li class="list-inline-item"> {{ tag }} </li>
+                                                          {% endif %}
+                                                      {% endfor %}
+                                                  </ul>
+                                            </dd>
+                                          </dl>
+
+                                          <dl class="row main-jacket">
+                                            <dt class="col-4 jacket">Date:</dt>
+                                            <dd class="col-8 jacket"> {{ image.date }} </dd>
+                                          </dl>
+
+                                          {% if image.image_permalink %}
+                                          <dl class="row jacket">
+                                            <a class="nav-link" href="{{ image.image_permalink }}" target="_blank">Link</a>
+                                          </dl>
+                                          {% endif %}
+
+                                  </div> <!-- end second column -->
                                   </div> <!-- end div row -->
                             </div> <!-- end first active carousel item -->
                             {% for image in others %}
@@ -27,12 +60,12 @@
                                       </div>  <!-- end first column -->
                                       <div class="col">
 
-                                              <dl class="row form-group">
+                                              <dl class="row form-group ">
                                                 <dt class="col-sm-4">Blog Name:</dt>
                                                 <dd class="col-sm-8"> {{ image.blog_name }} </dd>
                                               </dl>
 
-                                              {% if image.caption %}
+                                              {% if image.caption|length %}
                                               <dl class="row form-group">
                                                 <dt class="col-sm-4">Title:</dt>
                                                 <dd class="col-sm-8"> {{ image.caption }} </dd>
@@ -44,7 +77,9 @@
                                                 <dd class="col-sm-8">
                                                       <ul class="list-unstyled">
                                                           {% for tag in image['tags'] %}
+                                                            {%if tag|length %}
                                                               <li class="list-inline-item"> {{ tag }} </li>
+                                                            {% endif %}
                                                           {% endfor %}
                                                       </ul>
                                                 </dd>
