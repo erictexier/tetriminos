@@ -8,7 +8,7 @@ from base_site.carousel.tbl_display import TblDisplay
 
 
 url = '/v2/blog/letexman/posts'
-limit_request = {'limit':300, 'offset':300}
+limit_request = {'limit':140, 'offset':150}
 
 carousel = flask.Blueprint('carousel', __name__)
 

@@ -19,9 +19,11 @@ class TblDisplay(dict):
         if len(data_tumblr['photos']) > 0:
             if 'photos' in data_tumblr and 'caption' in data_tumblr['photos'][0]:
                 self['caption'] = data_tumblr['photos'][0]['caption']
-            self['pic_url'] = data_tumblr['photos'][0]['original_size']['url']
+            self['pic_url'] = data_tumblr['photos'][0]['original_size']
+            #print(data_tumblr['photos'][0]['original_size'])
+            #'width': 1280, 'height': 853
         for p in data_tumblr['photos'][1:]:
-            self['mult_url'].append(p['original_size']['url'])
+            self['mult_url'].append(p['original_size'])
 
         if 'image_permalink' in data_tumblr:
             self['image_permalink'] = data_tumblr['image_permalink'].replace('image','post')

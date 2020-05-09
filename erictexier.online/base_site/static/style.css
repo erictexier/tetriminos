@@ -88,8 +88,21 @@ dd {
   font-size: 1.1rem;
 }
 
-/*============= COURSE SECTION =============*/
-
+/*============= IMAGE FIT =============*/
+.img-responsive {
+  display: flex;
+  flex-direction: column;
+  flex-wrap: wrap;
+  align-items: flex-start;
+  height: 940px;
+}
+.img-car {
+  width: 750px; 
+  border: 2px solid #000;
+}
+.scale-down {
+  object-fit: scale-down;
+}
 .narrow {
   width: 75%;
   margin: 1.5rem auto;
@@ -278,6 +291,23 @@ hr.socket {
   height: 25px;
   vertical-align: middle;
   }
+
+@media (max-width: 768px) {
+  .img-responsive {
+    height: 740px;
+  }
+  .img-car {
+    width: 500px;
+  }
+}
+@media (max-width: 768px) {
+  .img-responsive {
+    height: 640px;
+  }
+  .img-car {
+    width: 400px;
+  }
+}
 /*============ BOOTSTRAP BREAK POINTS:
 
 Extra small (xs) devices (portrait phones, less than 576px)
