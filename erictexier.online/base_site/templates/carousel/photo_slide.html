@@ -9,7 +9,7 @@
                       <div class="carousel-item active">
                             <div class="row">
                                         <div class="col">
-                                                <img class="img-responsive"  height="400px"  alt="" src="{{ image.pic_url }}">
+                                                <img class="img-responsive"  height="800px"  alt="" src="{{ image.pic_url }}">
                                         </div>
                                         <div class="col main-jacket">
 
@@ -56,25 +56,25 @@
                             <div class="carousel-item">
                                   <div class="row">
                                       <div class="col">
-                                          <img class="img-responsive" height="400px"  alt="" src="{{ image.pic_url }}">
+                                          <img class="img-responsive" height="800px"  alt="" src="{{ image.pic_url }}">
                                       </div>  <!-- end first column -->
-                                      <div class="col">
+                                      <div class="col main-jacket">
 
-                                              <dl class="row form-group ">
-                                                <dt class="col-sm-4">Blog Name:</dt>
-                                                <dd class="col-sm-8"> {{ image.blog_name }} </dd>
+                                              <dl class="row row-jacket">
+                                                <dt class="col-sm-4 jacket">Blog Name:</dt>
+                                                <dd class="col-sm-8 jacket"> {{ image.blog_name }} </dd>
                                               </dl>
 
                                               {% if image.caption|length %}
-                                              <dl class="row form-group">
-                                                <dt class="col-sm-4">Title:</dt>
-                                                <dd class="col-sm-8"> {{ image.caption }} </dd>
+                                              <dl class="row row-jacket">
+                                                <dt class="col-sm-4 jacket">Title:</dt>
+                                                <dd class="col-sm-8 jacket"> {{ image.caption }} </dd>
                                               </dl>
                                               {% endif %}
 
-                                              <dl class="row form-group">
-                                                <dt class="col-sm-4">Tags:</dt>
-                                                <dd class="col-sm-8">
+                                              <dl class="row row-jacket">
+                                                <dt class="col-sm-4 jacket">Tags:</dt>
+                                                <dd class="col-sm-8 jacket">
                                                       <ul class="list-unstyled">
                                                           {% for tag in image['tags'] %}
                                                             {%if tag|length %}
@@ -85,13 +85,13 @@
                                                 </dd>
                                               </dl>
 
-                                              <dl class="row form-group">
-                                                <dt class="col-sm-4">Date:</dt>
-                                                <dd class="col-sm-8"> {{ image.date }} </dd>
+                                              <dl class="row row-jacket">
+                                                <dt class="col-sm-4 jacket">Date:</dt>
+                                                <dd class="col-sm-8 jacket"> {{ image.date }} </dd>
                                               </dl>
 
                                               {% if image.image_permalink %}
-                                              <dl class="row bot1">
+                                              <dl class="row row-jacket">
                                                 <a class="nav-link" href="{{ image.image_permalink }}" target="_blank">Link</a>
                                               </dl>
                                               {% endif %}

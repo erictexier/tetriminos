@@ -180,6 +180,7 @@ footer {
   padding: 2rem 0 2rem;
   margin-top: 1rem;
 }
+
 footer img {
   height: 3rem;
   margin: 1.5rem 0;
@@ -193,6 +194,25 @@ footer svg.svg-inline--fa {
 }
 footer svg.svg-inline--fa:hover {
   color: #1ebba3!important;
+}
+
+.footer .btn {
+  color: #ff8844;
+}
+.footer  .link {
+  color: #dbe5eb;
+}
+
+.footer  .link:hover {
+color: #ffffff;
+}
+
+.footer  .link.active {
+font-weight: 500;
+}
+
+.footer .btn-eclectic {
+  color: #BBCFDA;
 }
 hr.socket {
   width: 100%;
