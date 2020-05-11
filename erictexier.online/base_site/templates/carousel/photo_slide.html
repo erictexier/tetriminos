@@ -7,25 +7,29 @@
 <div id="carouselExampleSlidesOnly" class="carousel slide" data-ride="carousel">
   <div class="carousel-inner">
     <div class="carousel-item active">
-      <div class="row">
+      <div class="row main-jacket">
         <div class="col img-responsive text-center">
               <img class="img-car scale-down" src="{{ image.pic_url['url'] }}" alt="">
         </div>
-        <div class="col main-jacket">
 
-          <dl class="row row-jacket">
-            <dt class="col-4 jacket">Blog Name:</dt>
-            <dd class="col-8 jacket"> {{ image.blog_name }} </dd>
-          </dl>
+        <div class="col">
 
-          {% if image.caption %}
+          <!-- TITLE -->
+          {% if image.caption|length %}
           <dl class="row row-jacket">
             <dt class="col-4 jacket">Title:</dt>
             <dd class="col-8 jacket"> {{ image.caption }} </dd>
           </dl>
           {% endif %}
 
-          <dl class="row">
+          <!-- DATE -->
+          <dl class="row row-jacket">
+            <dt class="col-4 jacket">Date:</dt>
+            <dd class="col-8 jacket"> {{ image.date }} </dd>
+          </dl>
+
+          <!-- TAG -->
+          <dl class="row row-jacket">
             <dt class="col-4 jacket">Tags:</dt>
             <dd class="col-8 jacket">
                   <ul class="list-unstyled">
@@ -38,14 +42,11 @@
             </dd>
           </dl>
 
-          <dl class="row main-jacket">
-            <dt class="col-4 jacket">Date:</dt>
-            <dd class="col-8 jacket"> {{ image.date }} </dd>
-          </dl>
-
+          <!-- LINK -->
           {% if image.image_permalink %}
-          <dl class="row jacket">
-            <a class="nav-link" href="{{ image.image_permalink }}" target="_blank">Link</a>
+          <dl class="row row-jacket">
+            <dt class="col-4 jacket">Link:</dt>
+            <strong><a class="nav-link jacket" href="{{ image.image_permalink }}" target="_blank">{{ image.blog_name }} </a></strong>
           </dl>
           {% endif %}
 
@@ -54,17 +55,14 @@
     </div> <!-- end first active carousel item -->
     {% for image in others %}
       <div class="carousel-item">
-      <div class="row">
+      <div class="row  main-jacket">
         <div class="col img-responsive">
             <img class="img-car scale-down" src="{{ image.pic_url['url'] }}" alt="">
         </div>  <!-- end first column -->
-        <div class="col main-jacket">
 
-          <dl class="row row-jacket">
-            <dt class="col-sm-4 jacket">Blog Name:</dt>
-            <dd class="col-sm-8 jacket"> {{ image.blog_name }} </dd>
-          </dl>
+        <div class="col">
 
+          <!-- TITLE -->
           {% if image.caption|length %}
           <dl class="row row-jacket">
             <dt class="col-sm-4 jacket">Title:</dt>
@@ -72,6 +70,13 @@
           </dl>
           {% endif %}
 
+          <!-- DATE -->
+          <dl class="row row-jacket">
+            <dt class="col-sm-4 jacket">Date:</dt>
+            <dd class="col-sm-8 jacket"> {{ image.date }} </dd>
+          </dl>
+
+          <!-- TAG -->
           <dl class="row row-jacket">
             <dt class="col-sm-4 jacket">Tags:</dt>
             <dd class="col-sm-8 jacket">
@@ -84,15 +89,14 @@
                   </ul>
             </dd>
           </dl>
-          <dl class="row row-jacket">
-            <dt class="col-sm-4 jacket">Date:</dt>
-            <dd class="col-sm-8 jacket"> {{ image.date }} </dd>
-          </dl>
+
+          <!-- LINK -->
           {% if image.image_permalink %}
-            <dl class="row row-jacket">
-            <a class="nav-link" href="{{ image.image_permalink }}" target="_blank">Link</a>
+          <dl class="row row-jacket">
+            <a class="nav-link jacket" href="{{ image.image_permalink }}" target="_blank">{{ image.blog_name }} </a>
           </dl>
           {% endif %}
+
         </div> <!-- end second column -->
       </div> <!-- end div row -->
     </div> <!-- end carousel item -->

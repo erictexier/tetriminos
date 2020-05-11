@@ -99,12 +99,12 @@ if __name__ == '__main__':
 
     print('pytumblr client created. You may run pytumblr commands prefixed with "client".\n')
 
-    #code.interact(local=dict(globals(), **{'client': client}))
+    
 
     from pprint import pprint
     from base_site.carousel.tbl_display import TblDisplay
     url = '/v2/blog/letexman/posts'
-    limit_request = {'limit':200, 'offset':200}
+    limit_request = {'limit':20, 'offset':200}
     #client = pytumblr.TumblrRestClient.get_tumblr_client(
     #                                '/Users/eric/workspace/quickstart/token_tumblr.yml')
     rep = client.send_api_request(
@@ -115,3 +115,5 @@ if __name__ == '__main__':
     tumblr_posts = rep['posts']
     for t in tumblr_posts:
         pprint(TblDisplay(t))
+    code.interact(local=dict(globals(), **{'client': client}))
+    
