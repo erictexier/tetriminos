@@ -11,6 +11,7 @@ import os
 import code
 from requests_oauthlib import OAuth1Session
 from base_site.config import Config
+import json
 
 '''
 example:
@@ -99,12 +100,10 @@ if __name__ == '__main__':
 
     print('pytumblr client created. You may run pytumblr commands prefixed with "client".\n')
 
-    
-
     from pprint import pprint
     from base_site.carousel.tbl_display import TblDisplay
-    url = '/v2/blog/letexman/posts'
-    limit_request = {'limit':20, 'offset':200}
+    url = '/v2/blog/yeswearemagazine/posts'
+    limit_request = {'limit':2, 'offset':200}
     #client = pytumblr.TumblrRestClient.get_tumblr_client(
     #                                '/Users/eric/workspace/quickstart/token_tumblr.yml')
     rep = client.send_api_request(
@@ -113,7 +112,15 @@ if __name__ == '__main__':
                                 params=limit_request,
                                 valid_parameters=['limit','offset'])
     tumblr_posts = rep['posts']
+    all = list()
     for t in tumblr_posts:
-        pprint(TblDisplay(t))
+        p = TblDisplay()
+        p.from_data_tumblr(t)
+        pprint(p)
+        all.append(p)
+    x = json.dumps(all)
+    aa = json.loads(x)
+    p = TblDisplay()
+    p.from_dict_file(aa[0])
     code.interact(local=dict(globals(), **{'client': client}))
     

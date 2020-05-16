@@ -17,7 +17,6 @@ carousel = flask.Blueprint('carousel', __name__)
 @carousel.route('/carousel')
 def carousel_route():
 
-
     client = pytumblr.TumblrRestClient.get_tumblr_client(
                                     app.config['TBL_TOKEN_CREDENTIAL'])
 
@@ -32,7 +31,8 @@ def carousel_route():
         post_list = list()
 
         for p in tumblr_posts:
-            newp = TblDisplay(p)
+            newp = TblDisplay()
+            newp.from_data_tumblr(p)
             if newp.is_valid():
                 post_list.append(newp)
         print("nb if photo",len(post_list))
