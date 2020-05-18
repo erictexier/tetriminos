@@ -1,3 +1,8 @@
+from collections import namedtuple
+
+class tumb_post(namedtuple('Tbl',
+    'blog_name blog tags date pic_url mult_url caption image_permalink')):
+    __slots__ = ()
 
 class TblDisplay(dict):
     """ helper to display template """
@@ -8,7 +13,6 @@ class TblDisplay(dict):
             'tags',
             'date']
 
-    
     _fkey = _tkey + [
             'pic_url',
             'mult_url'

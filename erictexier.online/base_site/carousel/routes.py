@@ -2,6 +2,7 @@
 import os
 import random
 
+import random
 import flask
 from flask import current_app as app
 from base_site.services import pytumblr
@@ -9,7 +10,8 @@ from base_site.carousel.tbl_display import TblDisplay
 
 
 url = '/v2/blog/letexman/posts'
-limit_request = {'limit':300, 'offset':1050}
+offset_rand = random.randint(150, 1000)
+limit_request = {'limit': 50, 'offset':offset_rand}
 
 carousel = flask.Blueprint('carousel', __name__)
 

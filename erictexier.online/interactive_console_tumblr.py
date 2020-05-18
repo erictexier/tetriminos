@@ -102,8 +102,9 @@ if __name__ == '__main__':
 
     from pprint import pprint
     from base_site.carousel.tbl_display import TblDisplay
-    url = '/v2/blog/yeswearemagazine/posts'
-    limit_request = {'limit':2, 'offset':200}
+    # url = '/v2/blog/yeswearemagazine/posts'
+    url = '/v2/blog/riversidestandpipe/posts'
+    limit_request = {'limit':3, 'offset':0}
     #client = pytumblr.TumblrRestClient.get_tumblr_client(
     #                                '/Users/eric/workspace/quickstart/token_tumblr.yml')
     rep = client.send_api_request(

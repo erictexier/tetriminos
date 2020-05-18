@@ -2,7 +2,7 @@
 @import url('https://fonts.googleapis.com/css2?family=Indie+Flower');
 body {
   overflow-x: hidden;
-  font-family: 'Indie Flower', cursive;
+  font-family: 'Lato', sans-serif; 
   color: #505962;
 }
 .offset:before {
@@ -19,6 +19,7 @@ body {
   margin-bottom: 0rem !important;
   padding-top: 0rem;
 }
+
 .jacket.nav-link, .jacket.a {
   color: #505962;
   padding: 0rem;
@@ -28,6 +29,7 @@ body {
   padding-top: 1rem!important;
   margin-bottom: 0rem !important;
   margin-top: 0rem !important;
+  font-family: 'Indie Flower', cursive;
 }
 .img-responsive {
   display: flex;
@@ -38,7 +40,7 @@ body {
 }
 .img-car {
   width: 750px; 
-  border: 2px solid #000;
+  border: 1px solid #000;
 }
 .scale-down {
   object-fit: scale-down;
