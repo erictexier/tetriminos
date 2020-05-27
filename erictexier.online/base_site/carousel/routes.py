@@ -99,14 +99,15 @@ def carousel_ajax():
                           'success': True})
 
 @carousel.route("/")
-@carousel.route('/carousel', methods=['GET'])
+@carousel.route('/carousel', methods=['POST', 'GET'])
 def carousel_route():
     form = TblForm()
-    print("coucou",form.blogname.data)
-    if form.blogname.data.strip() == "":
-        form.blogname.data = 'letexman'
-    post_list = reset_carousel(1000, form.blogname.data)
-    return flask.render_template("carousel/photo_slide.html",
-                                 title='Photo Slide',
-                                 image=post_list[0],
-                                 others=post_list[1:], form=form)
+    if flask.request.method == 'GET':
+        if form.blogname.data.strip() == "":
+            form.blogname.data = 'letexman'
+        post_list = reset_carousel(1000, form.blogname.data)
+        return flask.render_template("carousel/photo_slide.html",
+                                    title='Photo Slide',
+                                    image=post_list[0],
+                                    others=post_list[1:], form=form)
+    return flask.redirect(flask.url_for('carousel.carousel_route'))
