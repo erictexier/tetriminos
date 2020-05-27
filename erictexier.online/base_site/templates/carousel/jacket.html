@@ -1,0 +1,100 @@
+<div id="carouselExampleSlidesOnly" class="carousel slide" data-ride="carousel">
+<div class="carousel-inner">
+    <div class="carousel-item active">
+    <div class="row main-jacket">
+        <div class="col img-responsive text-center">
+            <img class="img-car scale-down" src="{{ image.pic_url['url'] }}" alt="">
+        </div>
+
+        <div class="col">
+
+        <!-- TITLE -->
+        {% if image.caption|length %}
+        <dl class="row row-jacket">
+            <dt class="col-4 jacket">Title:</dt>
+            <dd class="col-8 jacket"> {{ image.caption }} </dd>
+        </dl>
+        {% endif %}
+
+        <!-- DATE -->
+        <dl class="row row-jacket">
+            <dt class="col-4 jacket">Date:</dt>
+            <dd class="col-8 jacket"> {{ image.date }} </dd>
+        </dl>
+
+        <!-- TAG -->
+        <dl class="row row-jacket">
+            <dt class="col-4 jacket">Tags:</dt>
+            <dd class="col-8 jacket">
+                <ul class="list-unstyled">
+                    {% for tag in image['tags'] %}
+                        {% if tag|length %}
+                            <li class="list-inline-item"> {{ tag }} </li>
+                        {% endif %}
+                    {% endfor %}
+                </ul>
+            </dd>
+        </dl>
+
+        <!-- LINK -->
+        {% if image.image_permalink %}
+        <dl class="row row-jacket">
+            <dt class="col-4 jacket">Link:</dt>
+            <strong><a class="nav-link jacket" href="{{ image.image_permalink }}" target="_blank">{{ image.blog_name }} </a></strong>
+        </dl>
+        {% endif %}
+
+        </div> <!-- end second column -->
+    </div> <!-- end div row -->
+    </div> <!-- end first active carousel item -->
+    {% for image in others %}
+    <div class="carousel-item">
+    <div class="row  main-jacket">
+        <div class="col img-responsive">
+            <img class="img-car scale-down" src="{{ image.pic_url['url'] }}" alt="">
+        </div>  <!-- end first column -->
+
+        <div class="col">
+        {% autoescape false %}
+        <!-- TITLE -->
+        {% if image.caption|length %}
+        <dl class="row row-jacket">
+            <dt class="col-sm-4 jacket">Title:</dt>
+            <dd class="col-sm-8 jacket"> {{ image.caption|safe }} </dd>
+        </dl>
+        {% endif %}
+        {% endautoescape %}
+        <!-- DATE -->
+        <dl class="row row-jacket">
+            <dt class="col-sm-4 jacket">Date:</dt>
+            <dd class="col-sm-8 jacket"> {{ image.date }} </dd>
+        </dl>
+
+        <!-- TAG -->
+        <dl class="row row-jacket">
+            <dt class="col-sm-4 jacket">Tags:</dt>
+            <dd class="col-sm-8 jacket">
+            <ul class="list-unstyled">
+                {% for tag in image['tags'] %}
+                    {%if tag|length %}
+                    <li class="list-inline-item"> {{ tag }} </li>
+                    {% endif %}
+                {% endfor %}
+            </ul>
+            </dd>
+        </dl>
+
+        <!-- LINK -->
+        {% if image.image_permalink %}
+        <dl class="row row-jacket">
+            <dt class="col-4 jacket">Link:</dt>
+            <strong><a class="nav-link jacket" href="{{ image.image_permalink }}" target="_blank">{{ image.blog_name }} </a></strong>
+        </dl>
+        {% endif %}
+
+        </div> <!-- end second column -->
+    </div> <!-- end div row -->
+    </div> <!-- end carousel item -->
+    {% endfor %}
+</div>
+</div> <!-- carouselExampleSlidesOnly -->

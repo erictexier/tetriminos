@@ -117,7 +117,7 @@ if __name__ == '__main__':
     for t in tumblr_posts:
         p = TblDisplay()
         p.from_data_tumblr(t)
-        pprint(p)
+        pprint(t)
         all.append(p)
     x = json.dumps(all)
     aa = json.loads(x)

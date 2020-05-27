@@ -1,4 +1,4 @@
-var prevScrollpos = window.pageYOffset;
+// var prevScrollpos = window.pageYOffset;
 $(document).ready(function() {
     // to open the home menu
     // $("#goofy").click();
@@ -42,6 +42,37 @@ $(document).ready(function() {
         });
         event.preventDefault();
     });
+
+
+    $('#form_ctl_id').submit(function(event) {
+
+        var data = {};
+        var Form = this;
+
+        $.each(this.elements, function(i, v) {
+            var input = $(v);
+            data[input.attr("name")] = input.val();
+            delete data["undefined"];
+        });
+        $.ajax({
+            type: 'POST',
+            url: '/carousel_ajax',
+            dataType: 'json',
+            contentType: 'application/json; charset=utf-8',
+            data: JSON.stringify(data),
+            context: Form,
+            success: function(cb_data) {
+                var res = $('#start_from_carousel').get(0);
+                console.log("in ajax response")
+                res.innerHTML = '<div>' + cb_data.html + '</div>';
+            },
+            error: function() {
+                $(this).html("Error! something went wrong! Sorry, Refresh page and try again!");
+            }
+        });
+        event.preventDefault();
+    });
+
 /*
     window.onscroll = function() {
         var currentScrollPos = window.pageYOffset;

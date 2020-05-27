@@ -1,0 +1,36 @@
+
+
+<!--- Three Column Section -->
+<div class="container-fluid padding-other">
+    <div class="row text-center padding-other">
+        <div class="col-xs-12 col-sm-6 col-md-4">
+            <a class="btn btn-social-icon btn-tumblr"  href="https://letexman.tumblr.com">
+              <span class="fa fa-tumblr"></span>
+            </a>
+            <h3>TUMBLR</h3>
+            <p>Get Access to Artist Works with no click </p>
+        </div>
+
+        <div class="col-xs-12 col-sm-6 col-md-4">
+
+            <form class="form-inline mr-3" method="POST", action="", id="form_ctl_id">
+               {{ form.hidden_tag() }}
+                <!-- select class="custom-select my-3 mr-sm-2" id="inlineFormCustomSelectPref"-->
+                <label for="sel1" style="margin-right:1rem">Select Blog Name:</label>
+                <select class="custom-select my-1 mr-sm-2" id="sel1" name="blogname">
+                  <option selected>Choose...</option>
+                  <option value="letexman">letexman</option>
+                  <option value="yeswearemagazine">yeswearemagazine</option>
+                </select>
+
+                <button type="submit" class="btn btn-outline-secondary my-1">Go</button>
+            </form>
+        </div> 
+
+        <div class="col-sm-12 col-md-4">
+            <p>By Submitting your will be making a query to an artist blog
+            on tumblr. Few are pre-selected for you, but you can go an edit your own</p>
+        </div>
+    </div>
+    <hr class="my-4">
+</div>

@@ -1,4 +1,5 @@
 from collections import namedtuple
+from pprint import pprint
 
 class tumb_post(namedtuple('Tbl',
     'blog_name blog tags date pic_url mult_url caption image_permalink')):
@@ -9,7 +10,7 @@ class TblDisplay(dict):
     _tkey = [
             'blog_name',
             'blog',
-            # 'photos',
+            'caption',
             'tags',
             'date']
 
@@ -27,15 +28,21 @@ class TblDisplay(dict):
     def from_data_tumblr(self, data_tumblr):
         for k in TblDisplay._tkey:
             if k in data_tumblr:
-                self[k] = data_tumblr[k]
+                if k != 'caption':
+                    self[k] = data_tumblr[k]
+                elif data_tumblr[k] != '':
+                    self[k] = data_tumblr[k]
 
         if 'photos' in data_tumblr and len(data_tumblr['photos']) > 0:
-            if ('caption' in data_tumblr['photos'][0] and 
-                data_tumblr['photos'][0]['caption'] != ""):
-                self['caption'] = data_tumblr['photos'][0]['caption']
+            #if ('caption' in data_tumblr['photos'] and 
+            #    data_tumblr['photos'][0]['caption'] != ""):
+            #    print("f"* 100)
+            # self['caption'] = data_tumblr['photos'][0]['caption']
+            #pprint (data_tumblr)
             self['pic_url'] = data_tumblr['photos'][0]['original_size']
             #print(data_tumblr['photos'][0]['original_size'])
             #'width': 1280, 'height': 853
+
         if 'photos' in data_tumblr:
             for p in data_tumblr['photos'][1:]:
                 self['mult_url'].append(p['original_size'])
