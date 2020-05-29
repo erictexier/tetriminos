@@ -123,5 +123,7 @@ if __name__ == '__main__':
     aa = json.loads(x)
     p = TblDisplay()
     p.from_dict_file(aa[0])
+    rep = client.following()
+
     code.interact(local=dict(globals(), **{'client': client}))
     
