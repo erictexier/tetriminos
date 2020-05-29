@@ -95,7 +95,7 @@ def carousel_route():
     
     if flask.request.method == 'GET':
         if form.blogname.data.strip() == "":
-            form.blogname.data = CURRENT_BLOG
+            form.blogname.data = 'CURRENT_BLOG'
         client = get_client()
         post_list = reset_carousel(client, 1000, form.blogname.data)
         follow = followers(client)
