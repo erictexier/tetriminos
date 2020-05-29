@@ -1,9 +1,17 @@
 from collections import namedtuple
 from pprint import pprint
 
+import re
+
+def cleanhtml(raw_html):
+  cleanr = re.compile('<.*?>|&([a-z0-9]+|#[0-9]{1,6}|#x[0-9a-f]{1,6});')
+  cleantext = re.sub(cleanr, '', raw_html)
+  return cleantext
+
 class tumb_post(namedtuple('Tbl',
     'blog_name blog tags date pic_url mult_url caption image_permalink')):
     __slots__ = ()
+
 
 class TblDisplay(dict):
     """ helper to display template """
@@ -31,7 +39,7 @@ class TblDisplay(dict):
                 if k != 'caption':
                     self[k] = data_tumblr[k]
                 elif data_tumblr[k] != '':
-                    self[k] = data_tumblr[k]
+                    self[k] = cleanhtml(data_tumblr[k])
 
         if 'photos' in data_tumblr and len(data_tumblr['photos']) > 0:
             #if ('caption' in data_tumblr['photos'] and 
