@@ -98,17 +98,15 @@ def carousel_route():
         client = get_client()
         post_list = reset_carousel(client, 50, form.blogname.data)
         follow = followers(client)
-        print("toto"*10,follow)
         CURRENT_BLOG = form.blogname.data
-        html = flask.render_template(
+        return flask.render_template(
                                     'carousel/jacket.html',
                                     title='Photo Slide',
                                     image=post_list[0],
                                     others=post_list[1:],
                                     following=follow,
                                     form=form)
-        return flask.jsonify({'html': html,
-                            'success': True})
+
     if flask.request.method == 'GET':
         if form.blogname.data.strip() == "":
             form.blogname.data = CURRENT_BLOG
@@ -116,7 +114,6 @@ def carousel_route():
         client = get_client()
         post_list = reset_carousel(client, 1000, form.blogname.data)
         follow = followers(client)
-        print(len(follow))
         return flask.render_template("carousel/photo_slide.html",
                                     title='Photo Slide',
                                     image=post_list[0],
