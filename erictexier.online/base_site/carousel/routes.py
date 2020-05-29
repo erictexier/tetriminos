@@ -93,7 +93,8 @@ def followers(client):
 def carousel_route():
     form = TblForm()
     if form.validate_on_submit():
-        CURRENT_BLOG = int(form.blogname.data)
+        print("carousel  POST",str(form.blogname.data))
+        CURRENT_BLOG = str(form.blogname.data)
         client = get_client()
         post_list = reset_carousel(client, 50, form.blogname.data)
         follow = followers(client)
@@ -111,6 +112,7 @@ def carousel_route():
     if flask.request.method == 'GET':
         if form.blogname.data.strip() == "":
             form.blogname.data = CURRENT_BLOG
+        print("carousel  GET")
         client = get_client()
         post_list = reset_carousel(client, 1000, form.blogname.data)
         follow = followers(client)
@@ -131,7 +133,7 @@ def carousel_ajax():
     client = get_client()
     post_list = reset_carousel(client, 50, form.blogname.data)
     follow = followers(client)
-    print("toto"*10,follow)
+    print("carousel POST AJAX", form.blogname.data)
     CURRENT_BLOG = form.blogname.data
     html = flask.render_template(
                                 'carousel/jacket.html',
