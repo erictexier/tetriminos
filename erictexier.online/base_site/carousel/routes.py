@@ -83,6 +83,19 @@ def reset_carousel(offset, blog_name):
     return post_list
 
 
+@carousel.route('/carousel', methods=['GET', 'POST'])
+def carousel_route():
+    form = TblForm()
+    if flask.request.method == 'GET':
+        if form.blogname.data.strip() == "":
+            form.blogname.data = 'letexman'
+        post_list = reset_carousel(1000, form.blogname.data)
+        return flask.render_template("carousel/photo_slide.html",
+                                    title='Photo Slide',
+                                    image=post_list[0],
+                                    others=post_list[1:], form=form)
+    return flask.redirect(flask.url_for('carousel.carousel_route'))
+
 @carousel.route('/carousel_ajax', methods=['POST'])
 def carousel_ajax():
     form = TblForm()
@@ -98,16 +111,3 @@ def carousel_ajax():
     return flask.jsonify({'html': html,
                           'success': True})
 
-@carousel.route("/")
-@carousel.route('/carousel', methods=['POST', 'GET'])
-def carousel_route():
-    form = TblForm()
-    if flask.request.method == 'GET':
-        if form.blogname.data.strip() == "":
-            form.blogname.data = 'letexman'
-        post_list = reset_carousel(1000, form.blogname.data)
-        return flask.render_template("carousel/photo_slide.html",
-                                    title='Photo Slide',
-                                    image=post_list[0],
-                                    others=post_list[1:], form=form)
-    return flask.redirect(flask.url_for('carousel.carousel_route'))
