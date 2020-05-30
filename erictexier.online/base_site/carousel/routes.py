@@ -101,7 +101,7 @@ def carousel_route():
         follow = followers(client)
         CURRENT_BLOG = form.blogname.data
         return flask.render_template(
-                                    'carousel/jacket.html',
+                                    'carousel/photo_slide.html',
                                     title='Photo Slide',
                                     image=post_list[0],
                                     others=post_list[1:],
