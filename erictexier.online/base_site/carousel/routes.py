@@ -92,6 +92,7 @@ def followers(client):
 
 @carousel.route('/carousel', methods=['GET', 'POST'])
 def carousel_route():
+    global CURRENT_BLOG
     form = TblForm()
     if form.validate_on_submit():
         logging.info("carousel  POST %s" % str(form.blogname.data))
@@ -127,6 +128,7 @@ def carousel_route():
 
 @carousel.route('/carousel_ajax', methods=['POST'])
 def carousel_ajax():
+    global CURRENT_BLOG
     form = TblForm()
     if not form.validate_on_submit():
         return flask.jsonify({"success": False})
