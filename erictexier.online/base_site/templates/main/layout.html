@@ -12,7 +12,6 @@
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css">
     <link rel="stylesheet" type="text/css" href="{{ url_for('static',filename='css/style.css') }}">
     <link rel="stylesheet" type="text/css" href="{{ url_for('static',filename='css/fixed.css') }}">
-
     {% if title %}
         <title> EclecTic - {{ title }} </title>
     {% else %}
@@ -53,9 +52,10 @@
 
 <!--script src="https://cdn.jsdelivr.net/npm/popper.js@1.16.0/dist/umd/popper.min.js" integrity="sha384-Q6E9RHvbIyZFJoft+2mJbHaEWldlvI9IOYy5n3zV9zzTtmI3UksdQRVvoxMfooAo" crossorigin="anonymous"></script-->
 <!-- Optional JavaScript -->
-
 <!-- Custom Js -->
-<script src="{{ url_for('static', filename='js/towait.js') }}"></script>
 <script src="{{ url_for('static', filename='js/tet_anim.js') }}"></script>
+<script src="{{ url_for('static', filename='js/towait.js') }}"></script>
+
+
 </body>
 </html>

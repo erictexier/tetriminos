@@ -5,10 +5,8 @@ from werkzeug.utils import secure_filename
 
 main = flask.Blueprint('main', __name__)
 
-@main.route("/")
-def index():
-    return flask.redirect(flask.url_for("carousel.carousel_route"))
 
+@main.route("/")
 @main.route("/home")
 def home():
     page = flask.request.args.get('page', 1, type=int)

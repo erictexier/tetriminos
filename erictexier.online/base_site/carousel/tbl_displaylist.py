@@ -87,7 +87,3 @@ class TblDisplayList(object):
     @staticmethod
     def asDict(astr):
         return json.loads(astr)
-
-
-
-            
