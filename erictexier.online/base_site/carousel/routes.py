@@ -63,8 +63,8 @@ def get_client():
 
 
 def reset_carousel(client, offset, blog_name):
-    offset_rand = random.randint(10, offset)
-    limit_request = {'limit': 5, 'offset':offset_rand}
+    offset_rand = 0 # random.randint(10, offset)
+    limit_request = {'limit': 50, 'offset':offset_rand}
     url = '/v2/blog/%s/posts' % blog_name
 
     rep = client.send_api_request('get',
@@ -81,7 +81,7 @@ def reset_carousel(client, offset, blog_name):
         if newp.is_valid():
             post_list.append(newp)
     # print("nb of photo", len(post_list), limit_request)
-    random.shuffle(post_list)
+    # random.shuffle(post_list)
     if len(post_list) == 0:
         post_list = POST_LIST
     return post_list
@@ -103,6 +103,7 @@ def carousel_route():
         return flask.render_template(
                                     'carousel/photo_slide.html',
                                     title='Photo Slide',
+                                    blog_name=CURRENT_BLOG,
                                     image=post_list[0],
                                     others=post_list[1:],
                                     following=follow,
@@ -117,6 +118,7 @@ def carousel_route():
         follow = followers(client)
         return flask.render_template("carousel/photo_slide.html",
                                     title='Photo Slide',
+                                    blog_name=CURRENT_BLOG,
                                     image=post_list[0],
                                     others=post_list[1:],
                                     following=follow,
@@ -137,6 +139,7 @@ def carousel_ajax():
                                 'carousel/jacket.html',
                                 title='Photo Slide',
                                 image=post_list[0],
+                                blog_name=CURRENT_BLOG,
                                 others=post_list[1:],
                                 following=follow,
                                 form=form)
