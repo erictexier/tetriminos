@@ -8,7 +8,7 @@ from wtforms.validators import DataRequired
 class TblForm(flask_wtf.FlaskForm):
     blogname = wtforms.StringField('Blog Name',
                                 validators=[DataRequired()],default='letexman')
-    submit = wtforms.SubmitField('Go')
+    submit = wtforms.SubmitField('Read and Click')
 '''
     content = wtforms.StringField('Range',
                                 validators=[DataRequired()])

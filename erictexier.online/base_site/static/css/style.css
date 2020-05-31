@@ -118,21 +118,22 @@ body {
 /*============= IMAGE FIT =============*/
 
 
-.btn-secondary {
+.btn-secondary,
+.btn-info {
   border-width: medium;
   border-radius: 0;
   padding: .6rem 1.2rem;
   font-size: 1.2rem;
   text-transform: uppercase;
   margin: 1rem;
-  border-color: #1EBBA3;
-  background-color: #1EBBA3;
+  border-color: #7DBDDF;
+  background-color: #7DBDDF;
   color: white;
 }
 .btn-secondary:hover,
 .btn-secondary:focus {
-  border-color: #189582;
-  background-color: #189582;
+  border-color: #7DBDDF;
+  background-color: #7DBDDF;
   color: white;
 }
 
@@ -151,11 +152,11 @@ h3.heading {
 .heading-underline {
   width: 3rem;
   height: .2rem;
-  background-color: #1ebba3;
+  background-color: #7DBDDF;
   margin: 0 auto 2rem;
 }
 .feature svg.svg-inline--fa {
-  color: #1ebba3;
+  color: #7DBDDF;
 }
 .feature h3 {
   font-size: 1.3rem;

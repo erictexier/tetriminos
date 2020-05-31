@@ -65,6 +65,7 @@ $(document).ready(function() {
                 var res = $('#start_from_carousel').get(0);
                 console.log("in ajax response")
                 res.innerHTML = '<div>' + cb_data.html + '</div>';
+                $("#carouselExampleSlidesOnly").attr('data-interval', '6000');
             },
             error: function() {
                 $(this).html("Error! something went wrong! Sorry, Refresh page and try again!");
