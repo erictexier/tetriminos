@@ -13,6 +13,9 @@
             <li class="nav-item">
                 <a class="nav-link" href="{{ url_for('carousel.carousel_route') }}">Photography</a>
             </li>
+            <li class="nav-item">
+                <a class="nav-link" href="{{ url_for('fillit.fillit_route') }}">Game play</a>
+            </li>
             {% if current_user.is_authenticated %}
                 <li class="nav-item">
                     <a class="nav-link" href="{{ url_for('posts.new_post') }}">New Post</a>
