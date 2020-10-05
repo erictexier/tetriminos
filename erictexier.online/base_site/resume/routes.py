@@ -9,5 +9,5 @@ resume = flask.Blueprint('resume', __name__)
 def resume_route():
     folder = app.config.get("MEDIA_FOLDER", "")
     print("folder %s" % folder)
-    afile = os.path.join(folder,'resume.html')
+    afile = os.path.join(folder,'RESUME.pdf')
     return flask.send_file(afile)
