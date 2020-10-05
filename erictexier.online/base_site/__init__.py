@@ -64,6 +64,7 @@ def create_app(config_class=Config):
         from base_site.posts.routes import posts
         from base_site.main.routes import main
         from base_site.fillit.routes import fillit
+        from base_site.resume.routes import resume
         from base_site.carousel.routes import carousel
         from base_site.errors.handlers import errors
         from base_site.google_auth.routes import google_service
@@ -72,6 +73,7 @@ def create_app(config_class=Config):
         app.register_blueprint(posts)
         app.register_blueprint(main)
         app.register_blueprint(fillit)
+        app.register_blueprint(resume)
         app.register_blueprint(carousel)
         app.register_blueprint(google_service)
         app.register_blueprint(errors)
