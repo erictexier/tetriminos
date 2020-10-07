@@ -74,6 +74,25 @@ $(document).ready(function() {
         event.preventDefault();
     });
 
+    $('#playButton').click(function () {
+        var options = {interval: 2000,pause: false};
+        $('#carouselExampleSlidesOnly').carousel(options);
+        $('#carouselExampleSlidesOnly').carousel('cycle');
+    });
+    $('#pauseButton').click(function () {
+        $('#carouselExampleSlidesOnly').carousel('pause');
+    });
+    $('#restartButton').click(function () {
+        var options = {interval: 2000,pause: false};
+        $('#carouselExampleSlidesOnly').carousel('pause');
+        $(".carouselExampleSlidesOnly").carousel("reset");
+        $('.carouselExampleSlidesOnly').carousel().carousel(0);
+        $(".carouselExampleSlidesOnly").carousel("jumpItem", 1);
+        $('.carouselExampleSlidesOnly').carousel(0);
+
+        $('#carouselExampleSlidesOnly').carousel(options);
+        $('#carouselExampleSlidesOnly').carousel('cycle');
+    });
 /*
     window.onscroll = function() {
         var currentScrollPos = window.pageYOffset;
