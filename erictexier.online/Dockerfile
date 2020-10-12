@@ -1,17 +1,18 @@
-FROM python:3.7-alpine
-WORKDIR /code
+FROM continuumio/miniconda3
 
-ENV FLASK_APP run.py
+WORKDIR /app
 
-COPY run.py gunicorn-cfg.py requirements.txt config.py .env ./
+# Create the environment:
+COPY environment.yml .
+RUN conda env create -f environment.yml
 
-ENV FLASK_RUN_HOST 0.0.0.0
-RUN apk add --no-cache gcc musl-dev linux-headers
-COPY requirements.txt requirements.txt
-RUN pip install -r requirements.txt
-COPY . .
-CMD ["flask", "run"]
+# Make RUN commands use the new environment:
+SHELL ["conda", "run", "-n", "xaosenv", "/bin/bash", "-c"]
 
+# Make sure the environment is activated:
+RUN echo "Make sure flask is installed:"
+RUN python -c "import flask"
 
-EXPOSE 5005
-CMD ["gunicorn", "--config", "gunicorn-cfg.py", "run:app"]
+# The code to run when container is started:
+COPY run.py .
+ENTRYPOINT ["conda", "run", "-n", "xaosenv", "python", "run.py"]

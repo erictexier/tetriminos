@@ -1,0 +1,9 @@
+name: xaosenv
+channels:
+  - conda-forge
+  - defaults
+dependencies:
+  - python=3.8
+  - flask
+prefix: /Users/eric/miniconda3/envs/xaosenv
+
