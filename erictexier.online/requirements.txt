@@ -14,7 +14,7 @@ cffi==1.13.2
 chardet==3.0.4
 Click==7.0
 colour==0.1.5
-cryptography==2.8
+cryptography==3.2
 execnet==1.7.1
 Flask==1.1.1
 Flask-Admin==1.5.5
